@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider   = "prisma-client"
+  output     = "./generated/prisma"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum AUTH_PROVIDER {
+  // KAKAO
+  GOOGLE
+  // NAVER
+  // APPLE
+}
+
+// DB enum 타입 사용 x, 코드적으로 관리함.
+enum CURRENCY_CODE {
+  KRW // 한국 (원)
+  USD // 미국 (달러)
+  // JPY // 일본 (엔)
+}
+
+model user {
+  id        String    @id @default(dbgenerated()) @db.Char(26)
+  name      String    @db.VarChar(100)
+  timezone  String    @default("Asia/Seoul") @db.VarChar(50)
+  currency  String    @default("KRW") @db.Char(3)
+  birthDate DateTime? @map("birth_date") @db.Date
+  createdAt DateTime  @default(now()) @map("created_at") @db.DateTime(0)
+  deletedAt DateTime? @map("deleted_at") @db.DateTime(0)
+
+  auths         user_auth[]
+  accounts      account[]
+  transactions  transaction[]
+  categories    category[]
+  refreshTokens refresh_token[]
+}
+
+model refresh_token {
+  id        Int       @id @default(autoincrement()) @db.UnsignedInt
+  token     String    @db.Char(64) // SHA-256 해시화한 값
+  userId    String    @map("user_id") @db.Char(26)
+  deviceId  String    @map("device_id") @db.Char(36) // 플랫폼에서 생성한 UUID
+  createdAt DateTime  @default(now()) @map("created_at") @db.DateTime(0)
+  expiresAt DateTime  @map("expires_at") @db.DateTime(0)
+  revokedAt DateTime? @map("revoked_at") @db.DateTime(0)
+
+  user user @relation(fields: [userId], references: [id])
+
+  @@unique([userId, deviceId])
+  @@index([userId])
+}
+
+model user_auth {
+  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  userId     String   @map("user_id") @db.Char(26)
+  provider   String   @db.VarChar(10) // AUTH_PROVIDER 타입값 따름
+  providerId String   @map("provider_id") @db.VarChar(255)
+  createdAt  DateTime @default(now()) @map("created_at") @db.DateTime(0)
+
+  user user @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, provider])
+  @@index([userId])
+}
+
+model account {
+  id        String   @id @default(dbgenerated()) @db.Char(26)
+  groupType Int      @map("group_type") @db.UnsignedTinyInt // 0: 기본 계좌, 1: 저축 계좌, 2: 투자 계좌
+  userId    String   @map("user_id") @db.Char(26)
+  currency  String   @db.Char(3) // CURRENCY_CODE 따름
+  balance   BigInt   @default(0) @db.BigInt
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.DateTime(0)
+
+  user user @relation(fields: [userId], references: [id])
+
+  outgoing_transactions transaction[] @relation("OutgoingTransactions")
+  incoming_transactions transaction[] @relation("IncomingTransactions")
+
+  @@unique([userId, groupType, currency])
+}
+
+model transaction {
+  id              String   @id @default(dbgenerated()) @db.Char(26)
+  userId          String   @map("user_id") @db.Char(26)
+  type            Int      @map("type") @db.UnsignedTinyInt // 0: 수입, 1: 지출, 2: 저축 추가, 3: 저축 취소, 4: 투자 추가, 5: 투자 취소
+  categoryId      String?  @map("category_id") @db.Char(26)
+  fromAccountId   String?  @map("from_account_id") @db.Char(26)
+  toAccountId     String?  @map("to_account_id") @db.Char(26)
+  amount          BigInt   @db.BigInt
+  currency        String   @db.Char(3) // CURRENCY_CODE 따름
+  transactionDate DateTime @map("transaction_date") @db.Date
+  createdAt       DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.DateTime(0)
+
+  user         user      @relation(fields: [userId], references: [id])
+  category     category? @relation(fields: [categoryId], references: [id])
+  from_account account?  @relation("OutgoingTransactions", fields: [fromAccountId], references: [id])
+  to_account   account?  @relation("IncomingTransactions", fields: [toAccountId], references: [id])
+
+  @@index([userId, transactionDate])
+}
+
+model category {
+  id        String @id @default(dbgenerated()) @db.Char(26)
+  userId    String @map("user_id") @db.Char(26)
+  groupType Int    @map("group_type") @db.UnsignedTinyInt // 0: 기본 계좌, 1: 저축 계좌, 2: 투자 계좌
+  name      String @db.VarChar(50)
+
+  user user @relation(fields: [userId], references: [id])
+
+  transactions transaction[]
+
+  @@unique([userId, name, groupType])
+}
