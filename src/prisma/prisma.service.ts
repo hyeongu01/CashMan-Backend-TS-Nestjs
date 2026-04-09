@@ -1,4 +1,9 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  OnModuleInit,
+  OnModuleDestroy,
+} from '@nestjs/common';
 import { PrismaClient } from '../../prisma/generated/prisma/client';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { ConfigService } from '@nestjs/config';
@@ -14,8 +19,17 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
     this.client = new PrismaClient({ adapter });
   }
 
+  private readonly logger = new Logger(PrismaService.name);
+
   async onModuleInit() {
     await this.client.$connect();
+    try {
+      await this.client.$queryRawUnsafe('SELECT 1');
+      this.logger.log('Database connection established');
+    } catch (error) {
+      this.logger.error('Database connection failed', error);
+      throw error;
+    }
   }
 
   async onModuleDestroy() {

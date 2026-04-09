@@ -1,15 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthGuard } from '../common/guards/auth.guard';
+import { CurrentUser } from '../common/decorators/user.decorator';
+import { type user } from '../../prisma/generated/prisma/client';
+import { ApiResponse } from '../common/response/api-response';
+import { ApiBearerAuth, ApiOperation, ApiBody } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('me')
-  getMyProfile() {
-
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '내 프로필 조회' })
+  getMyProfile(@CurrentUser() user: user) {
+    return ApiResponse.success(user);
   }
   // @Post()
   // create(@Body() createUserDto: CreateUserDto) {
