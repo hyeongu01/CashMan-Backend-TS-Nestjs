@@ -19,6 +19,7 @@ import {
   REFRESH_TOKEN_EXPIRES_IN,
   REFRESH_TOKEN_EXPIRES_MS,
 } from '../common/constants/auth';
+import { NaverApiService } from './oauth/naver-api.service';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,7 @@ export class AuthService {
     private configService: ConfigService,
     private prismaService: PrismaService,
     private jwtService: JwtService,
+    private naverApiService: NaverApiService,
   ) {}
 
   generateNaverLoginUrl() {
@@ -46,51 +48,58 @@ export class AuthService {
     // TODO: redis 에서 state 검증 로직 추가
 
     // access_token 발급 (네이버 서버 jwt)
-    const tokenResult = await axios.get(
-      'https://nid.naver.com/oauth2.0/token',
-      {
-        params: {
-          grant_type: 'authorization_code',
-          client_id: this.configService.get<string>('NAVER_CLIENT_ID'),
-          client_secret: this.configService.get<string>('NAVER_CLIENT_SECRET'),
-          redirect_uri: this.configService.get<string>('NAVER_REDIRECT_URI'),
-          ...naverCallbackDto,
-        },
-      },
-    );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { access_token, token_type } = tokenResult.data;
+    const { accessToken, tokenType } =
+      await this.naverApiService.getAccessToken(naverCallbackDto);
+    // const tokenResult = await axios.get(
+    //   'https://nid.naver.com/oauth2.0/token',
+    //   {
+    //     params: {
+    //       grant_type: 'authorization_code',
+    //       client_id: this.configService.get<string>('NAVER_CLIENT_ID'),
+    //       client_secret: this.configService.get<string>('NAVER_CLIENT_SECRET'),
+    //       redirect_uri: this.configService.get<string>('NAVER_REDIRECT_URI'),
+    //       ...naverCallbackDto,
+    //     },
+    //   },
+    // );
+    // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // const { access_token, token_type } = tokenResult.data;
 
     // profile 조회
-    const profileResult = await axios.get(
-      'https://openapi.naver.com/v1/nid/me',
-      {
-        headers: { Authorization: `${token_type} ${access_token}` },
-      },
+    const loginDto = await this.naverApiService.getProfile(
+      tokenType,
+      accessToken,
     );
-    const profile = plainToInstance(
-      NaverProfileDto,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      profileResult.data.response,
-    );
-    await validateOrReject(profile);
-
-    if (!profile.name)
-      throw new InternalServerErrorException(
-        '네이버 프로필에 이름이 없습니다.',
-      );
-
-    return await this.login({
-      provider: 'NAVER',
-      providerId: profile.id,
-      name: profile.name,
-      birthDate: ((): string | undefined => {
-        const date = new Date(`${profile.birthyear}-${profile.birthday}`);
-        return isNaN(date.getTime())
-          ? undefined
-          : date.toISOString().split('T')[0];
-      })(),
-    });
+    // const profileResult = await axios.get(
+    //   'https://openapi.naver.com/v1/nid/me',
+    //   {
+    //     headers: { Authorization: `${token_type} ${access_token}` },
+    //   },
+    // );
+    // const profile = plainToInstance(
+    //   NaverProfileDto,
+    //   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    //   profileResult.data.response,
+    // );
+    // await validateOrReject(profile);
+    //
+    // if (!profile.name)
+    //   throw new InternalServerErrorException(
+    //     '네이버 프로필에 이름이 없습니다.',
+    //   );
+    //
+    // return await this.login({
+    //   provider: 'NAVER',
+    //   providerId: profile.id,
+    //   name: profile.name,
+    //   birthDate: ((): string | undefined => {
+    //     const date = new Date(`${profile.birthyear}-${profile.birthday}`);
+    //     return isNaN(date.getTime())
+    //       ? undefined
+    //       : date.toISOString().split('T')[0];
+    //   })(),
+    // });
+    return await this.login(loginDto);
   }
 
   private async login(params: LoginDto) {

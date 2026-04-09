@@ -4,7 +4,7 @@ import { AuthGuard } from '../common/guards/auth.guard';
 import { CurrentUser } from '../common/decorators/user.decorator';
 import { type user } from '../../prisma/generated/prisma/client';
 import { ApiResponse } from '../common/response/api-response';
-import { ApiBearerAuth, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
