@@ -12,7 +12,7 @@ import { ulid } from 'ulid';
 import { AccountType } from '../common/constants/account-trype';
 import { CurrencyCode } from '../common/constants/currency';
 import { JwtService } from '@nestjs/jwt';
-import { ApiResponse } from '../common/response/api-response';
+import { ApiSuccessResponse } from '../common/response/api-response';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { sha256 } from '../common/utils/hash';
 import {
@@ -57,7 +57,7 @@ export class AuthService {
     return await this.login(loginDto);
   }
 
-  private async login(params: LoginDto) {
+  async login(params: LoginDto) {
     let user: user | null = await this.prismaService.user.findFirst({
       where: {
         auths: {
@@ -119,7 +119,7 @@ export class AuthService {
         expiresAt: new Date(Date.now() + REFRESH_TOKEN_EXPIRES_MS),
       },
     });
-    return ApiResponse.success(tokens);
+    return ApiSuccessResponse.of(tokens);
   }
 
   private generateTokens(user: user, deviceId: string): LoginResponseDto {

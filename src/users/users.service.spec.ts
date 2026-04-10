@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { PrismaService } from '../prisma/prisma.service';
-import {UpdateUserDto} from "./dto/update-user.dto";
-import {user} from "../generated/prisma/client";
+import { UpdateUserDto } from './dto/update-user.dto';
+import { user } from '../generated/prisma/client';
 
 const mockPrismaService = {
   user: {
@@ -13,7 +13,7 @@ const mockPrismaService = {
 
 describe('UsersService', () => {
   let service: UsersService;
-  let prismaService: PrismaService;
+  let prismaService: jest.Mocked<PrismaService>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -31,14 +31,8 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('getItem', () => {
-    it('should return a user by id', async () => {});
-
-    it('should return null if user not found', async () => {});
-  });
-
   describe('updateItem', () => {
-    it.skip('should be successfully updated the user', async () => {
+    it('should be successfully updated the user', async () => {
       const mockupUser: user = {
         id: '1234',
         name: '현우',
@@ -51,7 +45,13 @@ describe('UsersService', () => {
       const mockupBody: UpdateUserDto = {
         name: 'John Doe',
       };
-      service.updateItem(mockupUser, mockupBody);
-    })
+      (prismaService.user.update as jest.Mock).mockResolvedValueOnce({
+        ...mockupUser,
+        ...mockupBody,
+      });
+      const result = await service.updateItem(mockupUser.id, mockupBody);
+      expect(result).toHaveProperty('name', 'John Doe');
+      expect(result).toHaveProperty('timezone', 'Asia/Seoul');
+    });
   });
 });

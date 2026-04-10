@@ -82,6 +82,7 @@ export const UserScalarFieldEnum = {
   currency: 'currency',
   birthDate: 'birthDate',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
 } as const
 

@@ -55,7 +55,7 @@ model refresh_token {
   expiresAt DateTime  @map("expires_at") @db.DateTime(0)
   revokedAt DateTime? @map("revoked_at") @db.DateTime(0)
 
-  user user @relation(fields: [userId], references: [id])
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, deviceId])
   @@index([userId])
@@ -68,7 +68,7 @@ model user_auth {
   providerId String   @map("provider_id") @db.VarChar(255)
   createdAt  DateTime @default(now()) @map("created_at") @db.DateTime(0)
 
-  user user @relation(fields: [userId], references: [id])
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([providerId, provider])
   @@index([userId])
@@ -83,7 +83,7 @@ model account {
   createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt DateTime @updatedAt @map("updated_at") @db.DateTime(0)
 
-  user user @relation(fields: [userId], references: [id])
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   outgoing_transactions transaction[] @relation("OutgoingTransactions")
   incoming_transactions transaction[] @relation("IncomingTransactions")
@@ -104,7 +104,7 @@ model transaction {
   createdAt       DateTime @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt       DateTime @updatedAt @map("updated_at") @db.DateTime(0)
 
-  user         user      @relation(fields: [userId], references: [id])
+  user         user      @relation(fields: [userId], references: [id], onDelete: Cascade)
   category     category? @relation(fields: [categoryId], references: [id])
   from_account account?  @relation("OutgoingTransactions", fields: [fromAccountId], references: [id])
   to_account   account?  @relation("IncomingTransactions", fields: [toAccountId], references: [id])
@@ -118,7 +118,7 @@ model category {
   groupType Int    @map("group_type") @db.UnsignedTinyInt // 0: 기본 계좌, 1: 저축 계좌, 2: 투자 계좌
   name      String @db.VarChar(50)
 
-  user user @relation(fields: [userId], references: [id])
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   transactions transaction[]
 

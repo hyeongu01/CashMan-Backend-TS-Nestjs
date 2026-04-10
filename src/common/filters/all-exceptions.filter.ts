@@ -6,7 +6,7 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
-import { ApiResponse } from '../response/api-response';
+import { ApiErrorResponse } from '../response/api-response';
 import { Response } from 'express';
 
 @Catch()
@@ -27,11 +27,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? exception.message
         : 'Internal Server Error';
 
-    this.logger.error(
-      message,
-      exception instanceof Error ? exception.stack : '',
-    );
+    if (status >= 500) {
+      this.logger.error(message, exception instanceof Error ? exception.stack : '');
+    } else {
+      this.logger.warn(message);
+    }
 
-    response.status(status).json(ApiResponse.error(status, message));
+    response.status(status).json(ApiErrorResponse.of(status, message));
   }
 }

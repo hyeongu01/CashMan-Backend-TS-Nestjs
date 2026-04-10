@@ -36,5 +36,5 @@ describe('UsersController', () => {
     expect(result).toHaveProperty('message');
   });
 
-  it.skip('', () => {});
+  // it.skip('', () => {});
 });
