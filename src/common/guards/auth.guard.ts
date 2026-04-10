@@ -7,6 +7,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { UsersService } from '../../users/users.service';
+import { type user } from '../../generated/prisma/client';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -27,7 +28,7 @@ export class AuthGuard implements CanActivate {
     } catch {
       throw new UnauthorizedException();
     }
-    const user = await this.usersService.getItem(payload.id);
+    const user: user | null = await this.usersService.getItem(payload.id);
     if (!user) throw new UnauthorizedException();
     request['user'] = user;
     return true;

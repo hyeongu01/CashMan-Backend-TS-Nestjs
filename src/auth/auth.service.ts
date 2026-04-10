@@ -7,18 +7,19 @@ import { validateOrReject } from 'class-validator';
 import { NaverProfileDto } from './dto/naver-profile.dto';
 import { LoginDto } from './dto/login.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { type user } from '../../prisma/generated/prisma/client';
+import { type user } from '../generated/prisma/client';
 import { ulid } from 'ulid';
 import { AccountType } from '../common/constants/account-trype';
 import { CurrencyCode } from '../common/constants/currency';
 import { JwtService } from '@nestjs/jwt';
-import { ApiResponse } from '../common/response/api-response';
+import { ApiSuccessResponse } from '../common/response/api-response';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { sha256 } from '../common/utils/hash';
 import {
   REFRESH_TOKEN_EXPIRES_IN,
   REFRESH_TOKEN_EXPIRES_MS,
 } from '../common/constants/auth';
+import { NaverApiService } from './oauth/naver-api.service';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,7 @@ export class AuthService {
     private configService: ConfigService,
     private prismaService: PrismaService,
     private jwtService: JwtService,
+    private naverApiService: NaverApiService,
   ) {}
 
   generateNaverLoginUrl() {
@@ -45,55 +47,17 @@ export class AuthService {
   async naverLogin(naverCallbackDto: NaverCallbackDto) {
     // TODO: redis 에서 state 검증 로직 추가
 
-    // access_token 발급 (네이버 서버 jwt)
-    const tokenResult = await axios.get(
-      'https://nid.naver.com/oauth2.0/token',
-      {
-        params: {
-          grant_type: 'authorization_code',
-          client_id: this.configService.get<string>('NAVER_CLIENT_ID'),
-          client_secret: this.configService.get<string>('NAVER_CLIENT_SECRET'),
-          redirect_uri: this.configService.get<string>('NAVER_REDIRECT_URI'),
-          ...naverCallbackDto,
-        },
-      },
+    const { accessToken, tokenType } =
+      await this.naverApiService.getAccessToken(naverCallbackDto);
+    const loginDto = await this.naverApiService.getProfile(
+      tokenType,
+      accessToken,
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { access_token, token_type } = tokenResult.data;
 
-    // profile 조회
-    const profileResult = await axios.get(
-      'https://openapi.naver.com/v1/nid/me',
-      {
-        headers: { Authorization: `${token_type} ${access_token}` },
-      },
-    );
-    const profile = plainToInstance(
-      NaverProfileDto,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      profileResult.data.response,
-    );
-    await validateOrReject(profile);
-
-    if (!profile.name)
-      throw new InternalServerErrorException(
-        '네이버 프로필에 이름이 없습니다.',
-      );
-
-    return await this.login({
-      provider: 'NAVER',
-      providerId: profile.id,
-      name: profile.name,
-      birthDate: ((): string | undefined => {
-        const date = new Date(`${profile.birthyear}-${profile.birthday}`);
-        return isNaN(date.getTime())
-          ? undefined
-          : date.toISOString().split('T')[0];
-      })(),
-    });
+    return await this.login(loginDto);
   }
 
-  private async login(params: LoginDto) {
+  async login(params: LoginDto) {
     let user: user | null = await this.prismaService.user.findFirst({
       where: {
         auths: {
@@ -155,7 +119,7 @@ export class AuthService {
         expiresAt: new Date(Date.now() + REFRESH_TOKEN_EXPIRES_MS),
       },
     });
-    return ApiResponse.success(tokens);
+    return ApiSuccessResponse.of(tokens);
   }
 
   private generateTokens(user: user, deviceId: string): LoginResponseDto {
