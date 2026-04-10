@@ -30,6 +30,9 @@ export class UsersService {
   }
 
   async deleteItem(id: string): Promise<void> {
-    await this.prismaService.user.delete({where: { id }});
+    await this.prismaService.user.update({
+      where: {id},
+      data: { deletedAt: new Date() },
+    });
   }
 }

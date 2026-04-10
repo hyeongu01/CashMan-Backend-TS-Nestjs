@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Put, UseGuards, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { CurrentUser } from '../common/decorators/user.decorator';
@@ -54,8 +54,9 @@ export class UsersController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Not Found' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
-  deleteMyProfile(@CurrentUser() user: user) {
-
+  async deleteMyProfile(@CurrentUser() user: user) {
+    await this.usersService.deleteItem(user.id);
+    return ApiSuccessResponse.of({});
   }
 
 }

@@ -87,6 +87,4 @@ describe('Users Domain', () => {
       expect(res.body).toHaveProperty('data', {});
     })
   })
-
-  it.skip('should be reject 400', async () => {})
 })
