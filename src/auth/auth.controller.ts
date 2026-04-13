@@ -2,6 +2,7 @@ import { Controller, Get, Query, Redirect } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NaverCallbackDto } from './dto/naver-callback.dto';
 import { ApiOperation } from '@nestjs/swagger';
+import { RefreshDto } from './dto/refresh.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -20,4 +21,8 @@ export class AuthController {
   naverLogin(@Query() naverCallbackDto: NaverCallbackDto) {
     return this.authService.naverLogin(naverCallbackDto);
   }
+
+  @Get('/refresh')
+  @ApiOperation({ summary: 'accessToken 갱신' })
+  refresh(@Body() refreshDto: RefreshDto)
 }
