@@ -5,5 +5,10 @@ export class RefreshDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  token: string;
+  accessToken: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  refreshToken: string;
 }
