@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
+import { type user, type account } from '../generated/prisma/client';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import { PaginatedResponse } from '../common/response/pagination.response';
+import { AccountResponse } from './response/account.response';
+import { ApiSuccessResponse } from '../common/response/api-response';
 
 @Injectable()
 export class AccountsService {
-  create(createAccountDto: CreateAccountDto) {
-    return 'This action adds a new account';
-  }
+  constructor(private readonly prismaService: PrismaService) {}
 
-  findAll() {
-    return `This action returns all accounts`;
-  }
+  async getMyAccounts(
+    user: user,
+    paginationDto: PaginationDto,
+  ): Promise<ApiSuccessResponse<PaginatedResponse<AccountResponse>>> {
+    const [items, count] = await this.prismaService.$transaction([
+      this.prismaService.account.findMany({
+        where: { userId: user.id },
+        orderBy: paginationDto.orderBy,
+        skip: paginationDto.skip,
+        take: paginationDto.limit,
+      }),
+      this.prismaService.account.count({ where: { userId: user.id } }),
+    ]);
 
-  findOne(id: number) {
-    return `This action returns a #${id} account`;
-  }
-
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    return `This action updates a #${id} account`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} account`;
+    return ApiSuccessResponse.of(
+      PaginatedResponse.of(
+        items,
+        paginationDto.page,
+        paginationDto.limit,
+        count,
+        paginationDto.sortBy,
+        paginationDto.sortOrder,
+      ),
+    );
   }
 }
