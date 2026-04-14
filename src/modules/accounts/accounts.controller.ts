@@ -10,15 +10,15 @@ import {
   Query,
 } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
-import { AuthGuard } from '../common/guards/auth.guard';
-import { type user } from '../generated/prisma/client';
-import { CurrentUser } from '../common/decorators/user.decorator';
+import { AuthGuard } from '@common/guards/auth.guard';
+import { type user } from '@generated/prisma/client';
+import { CurrentUser } from '@common/decorators/user.decorator';
 import { ApiOperation, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
-import { PaginationDto } from '../common/dto/pagination.dto';
-import { ApiSuccessResponse } from '../common/response/api-response';
-import { PaginatedResponse } from '../common/response/pagination.response';
+import { PaginationDto } from '@common/dto/pagination.dto';
+import { ApiSuccessResponse } from '@common/response/api-response';
+import { PaginatedResponse } from '@common/response/pagination.response';
 import { AccountResponse } from './response/account.response';
-import { ApiPaginatedResponse } from '../common/decorators/api-wrapped-response.decorator';
+import { ApiPaginatedResponse } from '@common/decorators/api-wrapped-response.decorator';
 
 @Controller('accounts')
 export class AccountsController {

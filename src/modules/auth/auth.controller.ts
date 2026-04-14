@@ -4,7 +4,7 @@ import { NaverCallbackDto } from './dto/naver-callback.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { RefreshDto } from './dto/refresh.dto';
 import { RefreshResponse } from './response/refresh.response';
-import { ApiWrappedResponse } from '../common/decorators/api-wrapped-response.decorator';
+import { ApiWrappedResponse } from '@common/decorators/api-wrapped-response.decorator';
 import { LoginResponse } from './response/login.response';
 
 @Controller('auth')

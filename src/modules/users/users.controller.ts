@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Put, UseGuards, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AuthGuard } from '../common/guards/auth.guard';
-import { CurrentUser } from '../common/decorators/user.decorator';
-import { type user } from '../generated/prisma/client';
+import { AuthGuard } from '@common/guards/auth.guard';
+import { CurrentUser } from '@common/decorators/user.decorator';
+import { type user } from '@generated/prisma/client';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
-import { ApiErrorResponse, ApiSuccessResponse } from '../common/response/api-response';
-import { ApiWrappedResponse } from '../common/decorators/api-wrapped-response.decorator';
+import { ApiErrorResponse, ApiSuccessResponse } from '@common/response/api-response';
+import { ApiWrappedResponse } from '@common/decorators/api-wrapped-response.decorator';
 
 @Controller('users')
 export class UsersController {

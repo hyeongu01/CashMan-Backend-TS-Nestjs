@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { type user, type account } from '../generated/prisma/client';
-import { PaginationDto } from '../common/dto/pagination.dto';
-import { PrismaService } from '../prisma/prisma.service';
-import { PaginatedResponse } from '../common/response/pagination.response';
+import { type user, type account } from '@generated/prisma/client';
+import { PaginationDto } from '@common/dto/pagination.dto';
+import { PrismaService } from '@infra/prisma/prisma.service';
+import { PaginatedResponse } from '@common/response/pagination.response';
 import { AccountResponse } from './response/account.response';
-import { ApiSuccessResponse } from '../common/response/api-response';
+import { ApiSuccessResponse } from '@common/response/api-response';
 
 @Injectable()
 export class AccountsService {

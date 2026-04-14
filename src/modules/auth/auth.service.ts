@@ -2,22 +2,22 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NaverCallbackDto } from './dto/naver-callback.dto';
 import { LoginDto } from './dto/login.dto';
-import { PrismaService } from '../prisma/prisma.service';
-import { type user } from '../generated/prisma/client';
+import { PrismaService } from '@infra/prisma/prisma.service';
+import { type user } from '@generated/prisma/client';
 import { ulid } from 'ulid';
-import { AccountType } from '../common/constants/account-trype';
-import { CurrencyCode } from '../common/constants/currency';
+import { AccountType } from '@common/constants/account-trype';
+import { CurrencyCode } from '@common/constants/currency';
 import { JwtService } from '@nestjs/jwt';
 import {
   ApiErrorResponse,
   ApiSuccessResponse,
-} from '../common/response/api-response';
+} from '@common/response/api-response';
 import { LoginResponse } from './response/login.response';
-import { sha256 } from '../common/utils/hash';
+import { sha256 } from '@common/utils/hash';
 import {
   REFRESH_TOKEN_EXPIRES_IN,
   REFRESH_TOKEN_EXPIRES_MS,
-} from '../common/constants/auth';
+} from '@common/constants/auth';
 import { NaverApiService } from './oauth/naver-api.service';
 import { RefreshDto } from './dto/refresh.dto';
 import { RefreshResponse } from './response/refresh.response';

@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { JwtService } from '@nestjs/jwt';
-import { user } from '../generated/prisma/client';
+import { user } from '@generated/prisma/client';
 
 describe('UsersController', () => {
   let controller: UsersController;

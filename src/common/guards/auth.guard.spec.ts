@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthGuard } from './auth.guard';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../../users/users.service';
+import { UsersService } from '@modules/users/users.service';
 import {ExecutionContext} from "@nestjs/common";
 
 describe('AuthGuard', () => {

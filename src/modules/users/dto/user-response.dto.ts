@@ -1,4 +1,4 @@
-import { user } from '../../generated/prisma/client';
+import { user } from '@generated/prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserResponseDto {

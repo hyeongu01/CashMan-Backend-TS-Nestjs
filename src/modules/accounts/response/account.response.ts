@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { AccountType } from '../../common/constants/account-trype';
-import { CurrencyCode } from '../../common/constants/currency';
+import { AccountType } from '@common/constants/account-trype';
+import { CurrencyCode } from '@common/constants/currency';
 
 export class AccountResponse {
   @ApiProperty()
