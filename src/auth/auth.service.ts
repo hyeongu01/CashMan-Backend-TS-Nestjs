@@ -12,7 +12,7 @@ import {
   ApiErrorResponse,
   ApiSuccessResponse,
 } from '../common/response/api-response';
-import { LoginResponseDto } from './dto/login-response.dto';
+import { LoginResponse } from './response/login.response';
 import { sha256 } from '../common/utils/hash';
 import {
   REFRESH_TOKEN_EXPIRES_IN,
@@ -20,7 +20,7 @@ import {
 } from '../common/constants/auth';
 import { NaverApiService } from './oauth/naver-api.service';
 import { RefreshDto } from './dto/refresh.dto';
-import { RefreshResponse } from './dto/refresh-response.dto';
+import { RefreshResponse } from './response/refresh.response';
 import { JwtPayload, JwtRefreshPayload } from './types/jwt-payload.types';
 
 @Injectable()
@@ -105,7 +105,7 @@ export class AuthService {
     }
 
     const deviceId = ulid();
-    const tokens: LoginResponseDto = this.generateTokens(user, deviceId);
+    const tokens: LoginResponse = this.generateTokens(user, deviceId);
     const hashedRefreshToken = sha256(tokens.refreshToken);
 
     await this.prismaService.refresh_token.upsert({
@@ -124,7 +124,7 @@ export class AuthService {
     return ApiSuccessResponse.of(tokens);
   }
 
-  private generateTokens(user: user, deviceId: string): LoginResponseDto {
+  private generateTokens(user: user, deviceId: string): LoginResponse {
     const payload: JwtPayload = { id: user.id };
     const payloadRefresh: JwtRefreshPayload = { id: user.id, deviceId };
 
@@ -183,7 +183,7 @@ export class AuthService {
     });
     if (!user) throw ApiErrorResponse.notFound('유저를 찾을 수 없습니다.');
 
-    const tokens: LoginResponseDto = this.generateTokens(user, deviceId);
+    const tokens: LoginResponse = this.generateTokens(user, deviceId);
     const hashedRefreshToken = sha256(tokens.refreshToken);
 
     await this.prismaService.refresh_token.upsert({

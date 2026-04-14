@@ -3,9 +3,9 @@ import { AuthService } from './auth.service';
 import { NaverCallbackDto } from './dto/naver-callback.dto';
 import { ApiOperation } from '@nestjs/swagger';
 import { RefreshDto } from './dto/refresh.dto';
-import { RefreshResponse } from './dto/refresh-response.dto';
+import { RefreshResponse } from './response/refresh.response';
 import { ApiWrappedResponse } from '../common/decorators/api-wrapped-response.decorator';
-import { LoginResponseDto } from './dto/login-response.dto';
+import { LoginResponse } from './response/login.response';
 
 @Controller('auth')
 export class AuthController {
@@ -21,7 +21,7 @@ export class AuthController {
 
   @Get('/naver/callback')
   @ApiOperation({ summary: '네이버 콜백 API' })
-  @ApiWrappedResponse(LoginResponseDto)
+  @ApiWrappedResponse(LoginResponse)
   naverLogin(@Query() naverCallbackDto: NaverCallbackDto) {
     return this.authService.naverLogin(naverCallbackDto);
   }
