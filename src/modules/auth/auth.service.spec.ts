@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '@infra/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import {NaverApiService} from "./oauth/naver-api.service";
 

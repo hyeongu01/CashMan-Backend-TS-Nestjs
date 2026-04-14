@@ -3,9 +3,9 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from '../src/common/filters/all-exceptions.filter';
 import request from 'supertest';
 import { AppModule } from '../src/app/app.module';
-import { AuthService } from '../src/auth/auth.service';
-import { LoginDto } from '../src/auth/dto/login.dto';
-import { PrismaService } from '../src/prisma/prisma.service';
+import { AuthService } from '@modules/auth/auth.service';
+import { LoginDto } from '@modules/auth/dto/login.dto';
+import { PrismaService } from '@infra/prisma/prisma.service';
 
 const mockupUser: LoginDto = {
   provider: 'NAVER',

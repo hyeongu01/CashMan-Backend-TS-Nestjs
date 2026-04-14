@@ -6,8 +6,8 @@ import {
   IsString,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Timezone } from '../../common/constants/timezone';
-import { CurrencyCode } from '../../common/constants/currency';
+import { Timezone } from '@common/constants/timezone';
+import { CurrencyCode } from '@common/constants/currency';
 
 export class UpdateUserDto {
   @IsString()

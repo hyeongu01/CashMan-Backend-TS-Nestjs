@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { AuthProvider } from '../../common/constants/auth-provider';
+import { AuthProvider } from '@common/constants/auth-provider';
 
 export class LoginDto {
   @IsString()

@@ -1,10 +1,10 @@
 import { Controller, Get, Query, Body, Redirect, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NaverCallbackDto } from './dto/naver-callback.dto';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { RefreshDto } from './dto/refresh.dto';
 import { RefreshResponse } from './response/refresh.response';
-import { ApiWrappedResponse } from '../common/decorators/api-wrapped-response.decorator';
+import { ApiWrappedResponse } from '@common/decorators/api-wrapped-response.decorator';
 import { LoginResponse } from './response/login.response';
 
 @Controller('auth')
@@ -29,6 +29,8 @@ export class AuthController {
   @Post('/refresh')
   @ApiOperation({ summary: 'accessToken 갱신' })
   @ApiWrappedResponse(RefreshResponse)
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 500, description: 'Internal Server Error' })
   refresh(@Body() refreshDto: RefreshDto) {
     return this.authService.refresh(refreshDto);
   }

@@ -33,7 +33,7 @@ export type TransactionAvgAggregateOutputType = {
 
 export type TransactionSumAggregateOutputType = {
   type: number | null
-  amount: bigint | null
+  amount: number | null
 }
 
 export type TransactionMinAggregateOutputType = {
@@ -43,7 +43,7 @@ export type TransactionMinAggregateOutputType = {
   categoryId: string | null
   fromAccountId: string | null
   toAccountId: string | null
-  amount: bigint | null
+  amount: number | null
   currency: string | null
   transactionDate: Date | null
   createdAt: Date | null
@@ -57,7 +57,7 @@ export type TransactionMaxAggregateOutputType = {
   categoryId: string | null
   fromAccountId: string | null
   toAccountId: string | null
-  amount: bigint | null
+  amount: number | null
   currency: string | null
   transactionDate: Date | null
   createdAt: Date | null
@@ -226,7 +226,7 @@ export type TransactionGroupByOutputType = {
   categoryId: string | null
   fromAccountId: string | null
   toAccountId: string | null
-  amount: bigint
+  amount: number
   currency: string
   transactionDate: Date
   createdAt: Date
@@ -263,7 +263,7 @@ export type transactionWhereInput = {
   categoryId?: Prisma.StringNullableFilter<"transaction"> | string | null
   fromAccountId?: Prisma.StringNullableFilter<"transaction"> | string | null
   toAccountId?: Prisma.StringNullableFilter<"transaction"> | string | null
-  amount?: Prisma.BigIntFilter<"transaction"> | bigint | number
+  amount?: Prisma.IntFilter<"transaction"> | number
   currency?: Prisma.StringFilter<"transaction"> | string
   transactionDate?: Prisma.DateTimeFilter<"transaction"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
@@ -303,7 +303,7 @@ export type transactionWhereUniqueInput = Prisma.AtLeast<{
   categoryId?: Prisma.StringNullableFilter<"transaction"> | string | null
   fromAccountId?: Prisma.StringNullableFilter<"transaction"> | string | null
   toAccountId?: Prisma.StringNullableFilter<"transaction"> | string | null
-  amount?: Prisma.BigIntFilter<"transaction"> | bigint | number
+  amount?: Prisma.IntFilter<"transaction"> | number
   currency?: Prisma.StringFilter<"transaction"> | string
   transactionDate?: Prisma.DateTimeFilter<"transaction"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
@@ -343,7 +343,7 @@ export type transactionScalarWhereWithAggregatesInput = {
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"transaction"> | string | null
   fromAccountId?: Prisma.StringNullableWithAggregatesFilter<"transaction"> | string | null
   toAccountId?: Prisma.StringNullableWithAggregatesFilter<"transaction"> | string | null
-  amount?: Prisma.BigIntWithAggregatesFilter<"transaction"> | bigint | number
+  amount?: Prisma.IntWithAggregatesFilter<"transaction"> | number
   currency?: Prisma.StringWithAggregatesFilter<"transaction"> | string
   transactionDate?: Prisma.DateTimeWithAggregatesFilter<"transaction"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"transaction"> | Date | string
@@ -353,7 +353,7 @@ export type transactionScalarWhereWithAggregatesInput = {
 export type transactionCreateInput = {
   id?: string
   type: number
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -371,7 +371,7 @@ export type transactionUncheckedCreateInput = {
   categoryId?: string | null
   fromAccountId?: string | null
   toAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -381,7 +381,7 @@ export type transactionUncheckedCreateInput = {
 export type transactionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -399,7 +399,7 @@ export type transactionUncheckedUpdateInput = {
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   toAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -413,7 +413,7 @@ export type transactionCreateManyInput = {
   categoryId?: string | null
   fromAccountId?: string | null
   toAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -423,7 +423,7 @@ export type transactionCreateManyInput = {
 export type transactionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -437,7 +437,7 @@ export type transactionUncheckedUpdateManyInput = {
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   toAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -687,7 +687,7 @@ export type transactionUncheckedUpdateManyWithoutCategoryNestedInput = {
 export type transactionCreateWithoutUserInput = {
   id?: string
   type: number
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -703,7 +703,7 @@ export type transactionUncheckedCreateWithoutUserInput = {
   categoryId?: string | null
   fromAccountId?: string | null
   toAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -746,7 +746,7 @@ export type transactionScalarWhereInput = {
   categoryId?: Prisma.StringNullableFilter<"transaction"> | string | null
   fromAccountId?: Prisma.StringNullableFilter<"transaction"> | string | null
   toAccountId?: Prisma.StringNullableFilter<"transaction"> | string | null
-  amount?: Prisma.BigIntFilter<"transaction"> | bigint | number
+  amount?: Prisma.IntFilter<"transaction"> | number
   currency?: Prisma.StringFilter<"transaction"> | string
   transactionDate?: Prisma.DateTimeFilter<"transaction"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
@@ -756,7 +756,7 @@ export type transactionScalarWhereInput = {
 export type transactionCreateWithoutFrom_accountInput = {
   id?: string
   type: number
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -772,7 +772,7 @@ export type transactionUncheckedCreateWithoutFrom_accountInput = {
   type: number
   categoryId?: string | null
   toAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -792,7 +792,7 @@ export type transactionCreateManyFrom_accountInputEnvelope = {
 export type transactionCreateWithoutTo_accountInput = {
   id?: string
   type: number
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -808,7 +808,7 @@ export type transactionUncheckedCreateWithoutTo_accountInput = {
   type: number
   categoryId?: string | null
   fromAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -860,7 +860,7 @@ export type transactionUpdateManyWithWhereWithoutTo_accountInput = {
 export type transactionCreateWithoutCategoryInput = {
   id?: string
   type: number
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -876,7 +876,7 @@ export type transactionUncheckedCreateWithoutCategoryInput = {
   type: number
   fromAccountId?: string | null
   toAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -915,7 +915,7 @@ export type transactionCreateManyUserInput = {
   categoryId?: string | null
   fromAccountId?: string | null
   toAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -925,7 +925,7 @@ export type transactionCreateManyUserInput = {
 export type transactionUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -941,7 +941,7 @@ export type transactionUncheckedUpdateWithoutUserInput = {
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   toAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -954,7 +954,7 @@ export type transactionUncheckedUpdateManyWithoutUserInput = {
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   toAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -967,7 +967,7 @@ export type transactionCreateManyFrom_accountInput = {
   type: number
   categoryId?: string | null
   toAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -980,7 +980,7 @@ export type transactionCreateManyTo_accountInput = {
   type: number
   categoryId?: string | null
   fromAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -990,7 +990,7 @@ export type transactionCreateManyTo_accountInput = {
 export type transactionUpdateWithoutFrom_accountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1006,7 +1006,7 @@ export type transactionUncheckedUpdateWithoutFrom_accountInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   toAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1019,7 +1019,7 @@ export type transactionUncheckedUpdateManyWithoutFrom_accountInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   toAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1029,7 +1029,7 @@ export type transactionUncheckedUpdateManyWithoutFrom_accountInput = {
 export type transactionUpdateWithoutTo_accountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1045,7 +1045,7 @@ export type transactionUncheckedUpdateWithoutTo_accountInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1058,7 +1058,7 @@ export type transactionUncheckedUpdateManyWithoutTo_accountInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fromAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1071,7 +1071,7 @@ export type transactionCreateManyCategoryInput = {
   type: number
   fromAccountId?: string | null
   toAccountId?: string | null
-  amount: bigint | number
+  amount: number
   currency: string
   transactionDate: Date | string
   createdAt?: Date | string
@@ -1081,7 +1081,7 @@ export type transactionCreateManyCategoryInput = {
 export type transactionUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1097,7 +1097,7 @@ export type transactionUncheckedUpdateWithoutCategoryInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   fromAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   toAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1110,7 +1110,7 @@ export type transactionUncheckedUpdateManyWithoutCategoryInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   fromAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   toAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1176,7 +1176,7 @@ export type $transactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     categoryId: string | null
     fromAccountId: string | null
     toAccountId: string | null
-    amount: bigint
+    amount: number
     currency: string
     transactionDate: Date
     createdAt: Date
@@ -1560,7 +1560,7 @@ export interface transactionFieldRefs {
   readonly categoryId: Prisma.FieldRef<"transaction", 'String'>
   readonly fromAccountId: Prisma.FieldRef<"transaction", 'String'>
   readonly toAccountId: Prisma.FieldRef<"transaction", 'String'>
-  readonly amount: Prisma.FieldRef<"transaction", 'BigInt'>
+  readonly amount: Prisma.FieldRef<"transaction", 'Int'>
   readonly currency: Prisma.FieldRef<"transaction", 'String'>
   readonly transactionDate: Prisma.FieldRef<"transaction", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"transaction", 'DateTime'>
