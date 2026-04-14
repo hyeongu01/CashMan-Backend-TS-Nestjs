@@ -79,7 +79,7 @@ model account {
   groupType Int      @map("group_type") @db.UnsignedTinyInt // 0: 기본 계좌, 1: 저축 계좌, 2: 투자 계좌
   userId    String   @map("user_id") @db.Char(26)
   currency  String   @db.Char(3) // CURRENCY_CODE 따름
-  balance   BigInt   @default(0) @db.BigInt
+  balance   Int      @default(0)
   createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt DateTime @updatedAt @map("updated_at") @db.DateTime(0)
 
@@ -98,7 +98,7 @@ model transaction {
   categoryId      String?  @map("category_id") @db.Char(26)
   fromAccountId   String?  @map("from_account_id") @db.Char(26)
   toAccountId     String?  @map("to_account_id") @db.Char(26)
-  amount          BigInt   @db.BigInt
+  amount          Int
   currency        String   @db.Char(3) // CURRENCY_CODE 따름
   transactionDate DateTime @map("transaction_date") @db.Date
   createdAt       DateTime @default(now()) @map("created_at") @db.DateTime(0)
