@@ -3,13 +3,20 @@ import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 import { ApiSuccessResponse } from '../response/api-response';
 import { PaginatedResponse, PaginationMeta } from '../response/pagination.response';
 
-export const ApiWrappedResponse = <T extends Type>(dataDto?: T) => {
+export const ApiWrappedResponse = <T extends Type>(
+  dataDto?: T,
+  options?: { isArray?: boolean },
+) => {
   if (!dataDto) {
     return applyDecorators(
       ApiExtraModels(ApiSuccessResponse),
       ApiOkResponse({ schema: { $ref: getSchemaPath(ApiSuccessResponse) } }),
     );
   }
+
+  const dataSchema = options?.isArray
+    ? { type: 'array', items: { $ref: getSchemaPath(dataDto) } }
+    : { $ref: getSchemaPath(dataDto) };
 
   return applyDecorators(
     ApiExtraModels(ApiSuccessResponse, dataDto),
@@ -19,7 +26,7 @@ export const ApiWrappedResponse = <T extends Type>(dataDto?: T) => {
           { $ref: getSchemaPath(ApiSuccessResponse) },
           {
             properties: {
-              data: { $ref: getSchemaPath(dataDto) },
+              data: dataSchema,
             },
           },
         ],

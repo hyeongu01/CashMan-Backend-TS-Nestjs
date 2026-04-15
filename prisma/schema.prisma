@@ -105,7 +105,7 @@ model transaction {
   updatedAt       DateTime @updatedAt @map("updated_at") @db.DateTime(0)
 
   user         user      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category     category? @relation(fields: [categoryId], references: [id])
+  category     category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   from_account account?  @relation("OutgoingTransactions", fields: [fromAccountId], references: [id])
   to_account   account?  @relation("IncomingTransactions", fields: [toAccountId], references: [id])
 
