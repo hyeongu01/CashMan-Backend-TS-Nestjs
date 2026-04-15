@@ -9,6 +9,7 @@ import { AccountsModule } from '@modules/accounts/accounts.module';
 import { JwtModule } from '@nestjs/jwt';
 import { TOKEN_EXPIRES_IN } from '@common/constants/auth';
 import { LoggerMiddleware } from '@common/middleware/logger.middleware';
+import { CategoriesModule } from '@modules/categories/categories.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { LoggerMiddleware } from '@common/middleware/logger.middleware';
     PrismaModule,
     UsersModule,
     AuthModule,
+    CategoriesModule,
     AccountsModule,
   ],
   controllers: [AppController],

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { HttpException } from '@nestjs/common';
 
 export class ApiSuccessResponse<T> {
   @ApiProperty({ example: 200 })
@@ -25,7 +26,7 @@ export class ApiSuccessResponse<T> {
   }
 }
 
-export class ApiErrorResponse {
+export class ApiErrorResponse extends HttpException {
   @ApiProperty({ example: 400 })
   statusCode: number;
 
@@ -36,6 +37,7 @@ export class ApiErrorResponse {
   timestamp: string;
 
   private constructor(statusCode: number, message: string) {
+    super(message, statusCode);
     this.statusCode = statusCode;
     this.message = message;
     this.timestamp = new Date().toISOString();
@@ -65,7 +67,9 @@ export class ApiErrorResponse {
     return new ApiErrorResponse(409, message);
   }
 
-  static internalServerError(message = 'Internal Server Error'): ApiErrorResponse {
+  static internalServerError(
+    message = 'Internal Server Error',
+  ): ApiErrorResponse {
     return new ApiErrorResponse(500, message);
   }
 }

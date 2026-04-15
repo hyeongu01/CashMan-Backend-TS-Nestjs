@@ -17,6 +17,21 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
+    if (exception instanceof ApiErrorResponse) {
+      const status = exception.statusCode;
+      if (status >= 500) {
+        this.logger.error(exception.message);
+      } else {
+        this.logger.warn(exception.message);
+      }
+      response.status(status).json({
+        statusCode: exception.statusCode,
+        message: exception.message,
+        timestamp: exception.timestamp,
+      });
+      return;
+    }
+
     const status =
       exception instanceof HttpException
         ? exception.getStatus()
