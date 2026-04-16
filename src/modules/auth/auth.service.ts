@@ -32,7 +32,7 @@ export class AuthService {
     private naverApiService: NaverApiService,
   ) {}
 
-  generateNaverLoginUrl() {
+  generateNaverLoginUrl(redirectUrl: string) {
     const clientId = this.configService.get<string>('NAVER_CLIENT_ID');
     const redirectUri = this.configService.get<string>('NAVER_REDIRECT_URI');
     if (!clientId || !redirectUri)
@@ -40,10 +40,10 @@ export class AuthService {
 
     // TODO: 추후 redis 캐싱 예정
     const state: string = 'status';
-    return (
+    const url: string =
       'https://nid.naver.com/oauth2.0/authorize?response_type=code' +
-      `&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`
-    );
+      `&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`;
+    return ApiSuccessResponse.of({ url });
   }
 
   async naverLogin(naverCallbackDto: NaverCallbackDto) {
@@ -121,7 +121,7 @@ export class AuthService {
         expiresAt: new Date(Date.now() + REFRESH_TOKEN_EXPIRES_MS),
       },
     });
-    return ApiSuccessResponse.of(tokens);
+    return tokens;
   }
 
   private generateTokens(user: user, deviceId: string): LoginResponse {
