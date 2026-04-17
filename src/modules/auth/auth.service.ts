@@ -1,5 +1,11 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import type { Cache } from 'cache-manager';
 import { NaverCallbackDto } from './dto/naver-callback.dto';
 import { LoginDto } from './dto/login.dto';
 import { PrismaService } from '@infra/prisma/prisma.service';
@@ -30,24 +36,42 @@ export class AuthService {
     private prismaService: PrismaService,
     private jwtService: JwtService,
     private naverApiService: NaverApiService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  generateNaverLoginUrl(redirectUrl: string) {
+  async generateNaverLoginUrl(redirectUrl: string) {
     const clientId = this.configService.get<string>('NAVER_CLIENT_ID');
     const redirectUri = this.configService.get<string>('NAVER_REDIRECT_URI');
     if (!clientId || !redirectUri)
       throw new InternalServerErrorException('Naver 설정이 누락되었습니다.');
 
-    // TODO: 추후 redis 캐싱 예정
-    const state: string = 'status';
-    const url: string =
-      'https://nid.naver.com/oauth2.0/authorize?response_type=code' +
-      `&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`;
+    const state: string = crypto.randomUUID();
+    await this.cacheManager.set(
+      `naverState:${state}`,
+      redirectUrl,
+      5 * 60 * 1000,
+    );
+    const params = new URLSearchParams({
+      response_type: 'code',
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      state,
+    });
+    console.log(state, redirectUrl);
+
+    const url = `https://nid.naver.com/oauth2.0/authorize?${params}`;
     return ApiSuccessResponse.of({ url });
   }
 
   async naverLogin(naverCallbackDto: NaverCallbackDto) {
-    // TODO: redis 에서 state 검증 로직 추가
+    const cacheKey = `naverState:${naverCallbackDto.state}`;
+    console.log(cacheKey);
+    const redirectUrl = await this.cacheManager.get<string>(cacheKey);
+
+    if (!redirectUrl)
+      throw ApiErrorResponse.unauthorized('유효하지 않은 state 입니다.');
+
+    await this.cacheManager.del(cacheKey);
 
     const { accessToken, tokenType } =
       await this.naverApiService.getAccessToken(naverCallbackDto);
@@ -56,7 +80,8 @@ export class AuthService {
       accessToken,
     );
 
-    return await this.login(loginDto);
+    const tokens = await this.login(loginDto);
+    return { tokens, redirectUrl };
   }
 
   async login(params: LoginDto) {

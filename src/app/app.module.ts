@@ -10,6 +10,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { TOKEN_EXPIRES_IN } from '@common/constants/auth';
 import { LoggerMiddleware } from '@common/middleware/logger.middleware';
 import { CategoriesModule } from '@modules/categories/categories.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { createKeyv } from '@keyv/redis';
 
 @Module({
   imports: [
@@ -23,6 +25,14 @@ import { CategoriesModule } from '@modules/categories/categories.module';
       useFactory: (config: ConfigService) => ({
         secret: config.getOrThrow<string>('JWT_SECRET'),
         signOptions: { expiresIn: TOKEN_EXPIRES_IN },
+      }),
+    }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        stores: [createKeyv(config.getOrThrow<string>('REDIS_URL'))],
+        ttl: 60 * 1000,
       }),
     }),
     PrismaModule,

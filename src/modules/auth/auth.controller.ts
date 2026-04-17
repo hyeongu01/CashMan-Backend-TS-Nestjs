@@ -15,8 +15,8 @@ export class AuthController {
   @Get('/naver/login')
   @ApiOperation({ summary: '네이버 로그인 링크 생성' })
   @ApiWrappedResponse(AuthUrlResponse)
-  getNaverLoginUrl(@Query('redirectUrl') redirectUrl: string) {
-    return this.authService.generateNaverLoginUrl(redirectUrl);
+  async getNaverLoginUrl(@Query('redirectUrl') redirectUrl: string) {
+    return await this.authService.generateNaverLoginUrl(redirectUrl);
   }
 
   @Get('/naver/callback')
@@ -24,15 +24,14 @@ export class AuthController {
   @ApiWrappedResponse(LoginResponse)
   @Redirect()
   async naverLogin(@Query() naverCallbackDto: NaverCallbackDto) {
-    const tokens: LoginResponse =
+    const { tokens, redirectUrl } =
       await this.authService.naverLogin(naverCallbackDto);
-    const redirectBase = 'http://your';
     const params = new URLSearchParams({
       accessToken: tokens.accessToken,
       refreshToken: tokens.refreshToken,
       tokenType: tokens.tokenType,
     });
-    return { url: `${redirectBase}${params}`, statusCode: 302 };
+    return { url: `${redirectUrl}?${params}`, statusCode: 302 };
   }
 
   @Post('/refresh')
