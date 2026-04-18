@@ -169,19 +169,11 @@ export class AuthService {
   }
 
   private async validateTokens(
-    accessToken: string,
     refreshToken: string,
   ): Promise<JwtRefreshPayload> {
-    let accessPayload: JwtPayload;
     let refreshPayload: JwtRefreshPayload;
 
     try {
-      accessPayload = await this.jwtService.verifyAsync<JwtPayload>(
-        accessToken,
-        {
-          ignoreExpiration: true,
-        },
-      );
       refreshPayload = await this.jwtService.verifyAsync<JwtRefreshPayload>(
         refreshToken,
         {
@@ -192,10 +184,8 @@ export class AuthService {
       throw ApiErrorResponse.unauthorized('토큰이 유효하지 않습니다.');
     }
 
-    if (!accessPayload.id || !refreshPayload.id)
+    if (!refreshPayload.id)
       throw ApiErrorResponse.unauthorized('토큰 페이로드가 유효하지 않습니다.');
-    if (accessPayload.id !== refreshPayload.id)
-      throw ApiErrorResponse.unauthorized('토큰 유저가 일치하지 않습니다.');
 
     return refreshPayload;
   }
@@ -203,12 +193,11 @@ export class AuthService {
   async refresh(
     refreshDto: RefreshDto,
   ): Promise<ApiSuccessResponse<RefreshResponse>> {
-    const { accessToken: oldAccessToken, refreshToken: oldRefreshToken } =
-      refreshDto;
-    const { id, deviceId } = await this.validateTokens(
-      oldAccessToken,
-      oldRefreshToken,
-    );
+    const { refreshToken: oldRefreshToken } = refreshDto;
+    if (!oldRefreshToken)
+      throw ApiErrorResponse.badRequest('갱신 토큰이 없습니다.');
+
+    const { id, deviceId } = await this.validateTokens(oldRefreshToken);
 
     const user: user | null = await this.prismaService.user.findUnique({
       where: { id, deletedAt: null },

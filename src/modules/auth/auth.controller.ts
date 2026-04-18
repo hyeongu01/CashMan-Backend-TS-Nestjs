@@ -6,6 +6,7 @@ import {
   Post,
   Redirect,
   Res,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NaverCallbackDto } from './dto/naver-callback.dto';
@@ -15,7 +16,7 @@ import { RefreshResponse } from './response/refresh.response';
 import { ApiWrappedResponse } from '@common/decorators/api-wrapped-response.decorator';
 import { LoginResponse } from './response/login.response';
 import { AuthUrlResponse } from '@modules/auth/response/auth-url.response';
-import { type Response } from 'express';
+import { type Response, type Request } from 'express';
 import { REFRESH_TOKEN_EXPIRES_MS } from '@common/constants/auth';
 
 @Controller('auth')
@@ -56,9 +57,20 @@ export class AuthController {
   @Post('/refresh')
   @ApiOperation({ summary: 'accessToken 갱신' })
   @ApiWrappedResponse(RefreshResponse)
+  @ApiResponse({ status: 400, description: 'refreshToken 이 없습니다.' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
-  refresh(@Body() refreshDto: RefreshDto) {
-    return this.authService.refresh(refreshDto);
+  refresh(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+    @Body() refreshDto: RefreshDto,
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const refreshToken: string | undefined =
+      req.cookies?.refreshToken || refreshDto.refreshToken;
+
+    return this.authService.refresh({
+      refreshToken,
+    });
   }
 }
