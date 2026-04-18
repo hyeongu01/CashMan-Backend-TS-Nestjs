@@ -32,6 +32,7 @@ enum CURRENCY_CODE {
 model user {
   id        String    @id @default(dbgenerated()) @db.Char(26)
   name      String    @db.VarChar(100)
+  email     String    @unique @db.VarChar(200)
   timezone  String    @default("Asia/Seoul") @db.VarChar(50)
   currency  String    @default("KRW") @db.Char(3)
   birthDate DateTime? @map("birth_date") @db.Date

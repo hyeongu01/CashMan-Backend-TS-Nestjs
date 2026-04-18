@@ -33,8 +33,11 @@ EXPOSE 3000
 
 CMD ["npm", "run", "start:prod"]
 
-#- 빌드
-#docker build -t cashman .
+# - 빌드
+# docker build -t cashman .
 #
-#- 실행
-#docker run -d -p 3000:3000 --rm --env-file .env cashman
+# - 실행
+# docker run -d -p 3000:3000 --rm --env-file .env --name cashman-be cashman
+
+# - 중지 & 삭제
+# docker stop cashman-be

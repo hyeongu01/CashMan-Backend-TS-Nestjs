@@ -1,4 +1,5 @@
 import {
+  IsEmail,
   IsDateString,
   IsIn,
   IsNotEmpty,
@@ -20,6 +21,9 @@ export class LoginDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @IsEmail()
+  email: string;
 
   @IsDateString()
   @IsOptional()

@@ -5,8 +5,11 @@ import { CurrentUser } from '@common/decorators/user.decorator';
 import { type user } from '@generated/prisma/client';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UserResponseDto } from './dto/user-response.dto';
-import { ApiErrorResponse, ApiSuccessResponse } from '@common/response/api-response';
+import { UserResponse } from './responses/user.response';
+import {
+  ApiErrorResponse,
+  ApiSuccessResponse,
+} from '@common/response/api-response';
 import { ApiWrappedResponse } from '@common/decorators/api-wrapped-response.decorator';
 
 @Controller('users')
@@ -17,11 +20,11 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '내 프로필 조회' })
-  @ApiWrappedResponse(UserResponseDto)
+  @ApiWrappedResponse(UserResponse)
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
-  getMyProfile(@CurrentUser() user: user): ApiSuccessResponse<UserResponseDto> {
-    const data: UserResponseDto = UserResponseDto.from(user);
+  getMyProfile(@CurrentUser() user: user): ApiSuccessResponse<UserResponse> {
+    const data: UserResponse = UserResponse.from(user);
     return ApiSuccessResponse.of(data);
   }
 
@@ -38,10 +41,15 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<ApiSuccessResponse<{}>> {
     const fields = Object.keys(updateUserDto);
-    const hasChange = fields.some((key) => updateUserDto[key] && updateUserDto[key] !== user[key]);
+    const hasChange = fields.some(
+      (key) => updateUserDto[key] && updateUserDto[key] !== user[key],
+    );
     if (!hasChange) return ApiSuccessResponse.of({});
 
-    const result: user | null = await this.usersService.updateItem(user.id, updateUserDto);
+    const result: user | null = await this.usersService.updateItem(
+      user.id,
+      updateUserDto,
+    );
     if (!result) throw ApiErrorResponse.notFound('User not found');
     return ApiSuccessResponse.of({});
   }
@@ -58,5 +66,4 @@ export class UsersController {
     await this.usersService.deleteItem(user.id);
     return ApiSuccessResponse.of({});
   }
-
 }

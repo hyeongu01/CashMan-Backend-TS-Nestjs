@@ -65,7 +65,6 @@ export class AuthService {
 
   async naverLogin(naverCallbackDto: NaverCallbackDto) {
     const cacheKey = `naverState:${naverCallbackDto.state}`;
-    console.log(cacheKey);
     const redirectUrl = await this.cacheManager.get<string>(cacheKey);
 
     if (!redirectUrl)
@@ -92,42 +91,7 @@ export class AuthService {
         },
       },
     });
-    if (!user) {
-      user = await this.prismaService.user.create({
-        data: {
-          id: ulid(),
-          name: params.name,
-          birthDate: params.birthDate ? new Date(params.birthDate) : null,
-          auths: {
-            create: {
-              provider: params.provider,
-              providerId: params.providerId,
-            },
-          },
-          accounts: {
-            createMany: {
-              data: [
-                {
-                  id: ulid(),
-                  groupType: AccountType.DEFAULT,
-                  currency: CurrencyCode.KRW,
-                },
-                {
-                  id: ulid(),
-                  groupType: AccountType.DEPOSIT,
-                  currency: CurrencyCode.KRW,
-                },
-                {
-                  id: ulid(),
-                  groupType: AccountType.INVESTMENT,
-                  currency: CurrencyCode.KRW,
-                },
-              ],
-            },
-          },
-        },
-      });
-    }
+    if (!user) user = await this.createUser(params);
 
     const deviceId = ulid();
     const tokens: LoginResponse = this.generateTokens(user, deviceId);
@@ -159,6 +123,49 @@ export class AuthService {
       secret: this.configService.getOrThrow<string>('JWT_REFRESH_SECRET'),
     });
     return { accessToken, refreshToken, tokenType: 'bearer' };
+  }
+
+  private async createUser(params: LoginDto): Promise<user> {
+    const emailCheck: user | null = await this.prismaService.user.findUnique({
+      where: { email: params.email },
+    });
+    if (emailCheck)
+      throw ApiErrorResponse.conflict('이미 사용중인 이메일입니다.');
+    return this.prismaService.user.create({
+      data: {
+        id: ulid(),
+        name: params.name,
+        email: params.email,
+        birthDate: params.birthDate ? new Date(params.birthDate) : null,
+        auths: {
+          create: {
+            provider: params.provider,
+            providerId: params.providerId,
+          },
+        },
+        accounts: {
+          createMany: {
+            data: [
+              {
+                id: ulid(),
+                groupType: AccountType.DEFAULT,
+                currency: CurrencyCode.KRW,
+              },
+              {
+                id: ulid(),
+                groupType: AccountType.DEPOSIT,
+                currency: CurrencyCode.KRW,
+              },
+              {
+                id: ulid(),
+                groupType: AccountType.INVESTMENT,
+                currency: CurrencyCode.KRW,
+              },
+            ],
+          },
+        },
+      },
+    });
   }
 
   private async validateTokens(

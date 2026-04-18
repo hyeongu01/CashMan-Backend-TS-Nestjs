@@ -49,11 +49,16 @@ export class NaverApiService implements OAuthProvider {
       throw new InternalServerErrorException(
         '네이버 프로필에 이름이 없습니다.',
       );
+    if (!profile.email)
+      throw new InternalServerErrorException(
+        '네이버 프로필에 이메일이 없습니다.',
+      );
 
     return {
       provider: 'NAVER',
       providerId: profile.id,
       name: profile.name,
+      email: profile.email,
       birthDate: ((): string | undefined => {
         const date = new Date(`${profile.birthyear}-${profile.birthday}`);
         return isNaN(date.getTime())
