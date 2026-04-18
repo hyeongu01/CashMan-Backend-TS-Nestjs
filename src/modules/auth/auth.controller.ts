@@ -47,7 +47,7 @@ export class AuthController {
       httpOnly: true,
       // TODO: https 설정이 완료되면 true 로 변경
       secure: false,
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: REFRESH_TOKEN_EXPIRES_MS,
     });
     return { url: `${redirectUrl}?${params}`, statusCode: 302 };
