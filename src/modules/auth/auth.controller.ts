@@ -1,4 +1,12 @@
-import { Controller, Get, Query, Body, Post, Redirect } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Body,
+  Post,
+  Redirect,
+  Res,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NaverCallbackDto } from './dto/naver-callback.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -7,6 +15,8 @@ import { RefreshResponse } from './response/refresh.response';
 import { ApiWrappedResponse } from '@common/decorators/api-wrapped-response.decorator';
 import { LoginResponse } from './response/login.response';
 import { AuthUrlResponse } from '@modules/auth/response/auth-url.response';
+import { type Response } from 'express';
+import { REFRESH_TOKEN_EXPIRES_MS } from '@common/constants/auth';
 
 @Controller('auth')
 export class AuthController {
@@ -23,13 +33,22 @@ export class AuthController {
   @ApiOperation({ summary: '네이버 콜백 API' })
   @ApiWrappedResponse(LoginResponse)
   @Redirect()
-  async naverLogin(@Query() naverCallbackDto: NaverCallbackDto) {
+  async naverLogin(
+    @Query() naverCallbackDto: NaverCallbackDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const { tokens, redirectUrl } =
       await this.authService.naverLogin(naverCallbackDto);
     const params = new URLSearchParams({
       accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken,
-      tokenType: tokens.tokenType,
+    });
+
+    res.cookie('refreshToken', tokens.refreshToken, {
+      httpOnly: true,
+      // TODO: https 설정이 완료되면 true 로 변경
+      secure: false,
+      sameSite: 'strict',
+      maxAge: REFRESH_TOKEN_EXPIRES_MS,
     });
     return { url: `${redirectUrl}?${params}`, statusCode: 302 };
   }
