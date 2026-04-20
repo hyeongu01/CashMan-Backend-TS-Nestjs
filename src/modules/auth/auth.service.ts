@@ -57,7 +57,6 @@ export class AuthService {
       redirect_uri: redirectUri,
       state,
     });
-    console.log(state, redirectUrl);
 
     const url = `https://nid.naver.com/oauth2.0/authorize?${params}`;
     return ApiSuccessResponse.of({ url });

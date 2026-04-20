@@ -43,11 +43,18 @@ export class AllExceptionsFilter implements ExceptionFilter {
         : 'Internal Server Error';
 
     if (status >= 500) {
-      this.logger.error(message, exception instanceof Error ? exception.stack : '');
+      this.logger.error(
+        message,
+        exception instanceof Error ? exception.stack : '',
+      );
     } else {
       this.logger.warn(message);
     }
 
-    response.status(status).json(ApiErrorResponse.of(status, message));
+    response.status(status).json({
+      statusCode: status,
+      message,
+      timestamp: new Date(),
+    });
   }
 }

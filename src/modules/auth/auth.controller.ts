@@ -63,11 +63,11 @@ export class AuthController {
   refresh(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
-    @Body() refreshDto: RefreshDto,
+    @Body() refreshDto?: RefreshDto,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const refreshToken: string | undefined =
-      req.cookies?.refreshToken || refreshDto.refreshToken;
+      req.cookies?.refreshToken || refreshDto?.refreshToken;
 
     return this.authService.refresh({
       refreshToken,
