@@ -3,7 +3,7 @@ import { TransactionsService } from '@modules/transactions/transactions.service'
 import { AuthGuard } from '@common/guards/auth.guard';
 import { CurrentUser } from '@common/decorators/user.decorator';
 import { type user } from '@generated/prisma/client';
-import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { CreateTransactionsDto } from '@modules/transactions/dto/create-transactions.dto';
 import { ApiWrappedResponse } from '@common/decorators/api-wrapped-response.decorator';
 import { FindAllTransactionsResponse } from '@modules/transactions/response/findAll.response';

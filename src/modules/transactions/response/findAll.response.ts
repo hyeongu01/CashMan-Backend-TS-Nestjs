@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { CategoryResponse } from '@modules/categories/response/category.response';
 import { Transaction } from '@modules/transactions/types/transaction.type';
-import { IsInt, IsOptional, Max, Min } from 'class-validator';
 
 export class FindAllTransactionsResponse {
   @ApiProperty()
@@ -13,7 +12,6 @@ export class FindAllTransactionsResponse {
   @ApiProperty({
     required: false,
   })
-  @IsOptional()
   category?: CategoryResponse;
 
   @ApiProperty()
@@ -25,7 +23,7 @@ export class FindAllTransactionsResponse {
     return {
       id: transaction.id,
       type: transaction.type,
-      ...(transaction.category !== null && {
+      ...(transaction.category && {
         category: CategoryResponse.wrapper(transaction.category),
       }),
       name: transaction.name,
