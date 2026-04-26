@@ -132,8 +132,7 @@ export const TransactionScalarFieldEnum = {
   userId: 'userId',
   type: 'type',
   categoryId: 'categoryId',
-  fromAccountId: 'fromAccountId',
-  toAccountId: 'toAccountId',
+  accountId: 'accountId',
   amount: 'amount',
   currency: 'currency',
   transactionDate: 'transactionDate',
@@ -212,8 +211,7 @@ export const transactionOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
   categoryId: 'categoryId',
-  fromAccountId: 'fromAccountId',
-  toAccountId: 'toAccountId',
+  accountId: 'accountId',
   currency: 'currency'
 } as const
 

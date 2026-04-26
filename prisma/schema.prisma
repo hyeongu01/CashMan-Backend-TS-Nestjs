@@ -4,6 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// ------------ CONFIGS --------------
 generator client {
   provider     = "prisma-client"
   output       = "../src/generated/prisma"
@@ -15,6 +16,8 @@ datasource db {
   provider = "mysql"
 }
 
+// ------------ ENUMS --------------
+// DB enum 타입 사용 x, 코드적으로 관리함.
 enum AUTH_PROVIDER {
   // KAKAO
   GOOGLE
@@ -25,10 +28,9 @@ enum AUTH_PROVIDER {
 // DB enum 타입 사용 x, 코드적으로 관리함.
 enum CURRENCY_CODE {
   KRW // 한국 (원)
-  USD // 미국 (달러)
-  // JPY // 일본 (엔)
 }
 
+// ------------ MODELS --------------
 model user {
   id        String    @id @default(dbgenerated()) @db.Char(26)
   name      String    @db.VarChar(100)
@@ -86,8 +88,7 @@ model account {
 
   user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  outgoing_transactions transaction[] @relation("OutgoingTransactions")
-  incoming_transactions transaction[] @relation("IncomingTransactions")
+  outgoing_transactions transaction[]
 
   @@unique([userId, groupType, currency])
 }
@@ -97,8 +98,7 @@ model transaction {
   userId          String   @map("user_id") @db.Char(26)
   type            Int      @map("type") @db.UnsignedTinyInt // 0: 수입, 1: 지출, 2: 저축 추가, 3: 저축 취소, 4: 투자 추가, 5: 투자 취소
   categoryId      String?  @map("category_id") @db.Char(26)
-  fromAccountId   String?  @map("from_account_id") @db.Char(26)
-  toAccountId     String?  @map("to_account_id") @db.Char(26)
+  accountId       String?  @map("from_account_id") @db.Char(26)
   amount          Int
   currency        String   @db.Char(3) // CURRENCY_CODE 따름
   transactionDate DateTime @map("transaction_date") @db.Date
@@ -107,8 +107,7 @@ model transaction {
 
   user         user      @relation(fields: [userId], references: [id], onDelete: Cascade)
   category     category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  from_account account?  @relation("OutgoingTransactions", fields: [fromAccountId], references: [id])
-  to_account   account?  @relation("IncomingTransactions", fields: [toAccountId], references: [id])
+  from_account account?  @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
   @@index([userId, transactionDate])
 }

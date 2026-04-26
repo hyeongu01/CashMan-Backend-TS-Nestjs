@@ -17,8 +17,7 @@ export type AUTH_PROVIDER = (typeof AUTH_PROVIDER)[keyof typeof AUTH_PROVIDER]
 
 
 export const CURRENCY_CODE = {
-  KRW: 'KRW',
-  USD: 'USD'
+  KRW: 'KRW'
 } as const
 
 export type CURRENCY_CODE = (typeof CURRENCY_CODE)[keyof typeof CURRENCY_CODE]
