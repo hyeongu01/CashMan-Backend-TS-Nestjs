@@ -3,9 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Query,
   Patch,
-  Param,
   Delete,
   UseGuards,
 } from '@nestjs/common';
@@ -16,9 +14,8 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@common/guards/auth.guard';
 import { type user } from '@generated/prisma/client';
 import { CurrentUser } from '@common/decorators/user.decorator';
-import { ApiOperation, ApiOkResponse, ApiResponse } from '@nestjs//swagger';
+import { ApiOperation, ApiResponse } from '@nestjs//swagger';
 import { ApiWrappedResponse } from '@common/decorators/api-wrapped-response.decorator';
-import { ApiSuccessResponse } from '@common/response/api-response';
 import { CategoryResponse } from './response/category.response';
 
 @Controller('categories')
