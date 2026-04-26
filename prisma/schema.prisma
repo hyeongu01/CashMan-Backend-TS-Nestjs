@@ -117,6 +117,7 @@ model category {
   userId    String @map("user_id") @db.Char(26)
   groupType Int    @map("group_type") @db.UnsignedTinyInt // 0: 기본 계좌, 1: 저축 계좌, 2: 투자 계좌
   name      String @db.VarChar(50)
+  budget    Int?
 
   user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 

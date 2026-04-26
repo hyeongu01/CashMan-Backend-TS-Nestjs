@@ -6,6 +6,7 @@ import { AuthModule } from '@modules/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PrismaModule } from '@infra/prisma/prisma.module';
 import { AccountsModule } from '@modules/accounts/accounts.module';
+import { TransactionsModule } from '@modules/transactions/transactions.module';
 import { JwtModule } from '@nestjs/jwt';
 import { TOKEN_EXPIRES_IN } from '@common/constants/auth';
 import { LoggerMiddleware } from '@common/middleware/logger.middleware';
@@ -40,6 +41,7 @@ import { createKeyv } from '@keyv/redis';
     AuthModule,
     CategoriesModule,
     AccountsModule,
+    TransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

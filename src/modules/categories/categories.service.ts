@@ -52,7 +52,7 @@ export class CategoriesService {
 
   async update(
     updateCategoryDto: UpdateCategoryDto,
-  ): Promise<ApiSuccessResponse<{}>> {
+  ): Promise<ApiSuccessResponse<object>> {
     const { id, ...data } = updateCategoryDto;
     const oldCategory = await this.prismaService.category.findUnique({
       where: { id },
