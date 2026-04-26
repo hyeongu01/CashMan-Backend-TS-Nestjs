@@ -17,6 +17,9 @@ export class FindAllTransactionsResponse {
   @ApiProperty()
   name: string;
 
+  @ApiProperty()
+  transactionDate: string;
+
   static wrapper(
     transaction: Transaction<['category']>,
   ): FindAllTransactionsResponse {
@@ -27,6 +30,7 @@ export class FindAllTransactionsResponse {
         category: CategoryResponse.wrapper(transaction.category),
       }),
       name: transaction.name,
+      transactionDate: transaction.transactionDate.toISOString().split('T')[0],
     };
   }
 }

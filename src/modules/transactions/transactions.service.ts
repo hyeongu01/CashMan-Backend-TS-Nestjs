@@ -5,7 +5,8 @@ import { CreateTransactionsDto } from '@modules/transactions/dto/create-transact
 import { ApiSuccessResponse } from '@common/response/api-response';
 import { ulid } from 'ulid';
 import { FindAllTransactionsResponse } from '@modules/transactions/response/findAll.response';
-import { Transaction } from '@modules/transactions/types/transaction.type';
+import { PaginationDto } from '@common/dto/pagination.dto';
+import { PaginatedResponse } from '@common/response/pagination.response';
 
 @Injectable()
 export class TransactionsService {
@@ -29,20 +30,33 @@ export class TransactionsService {
 
   async findAll(
     user: user,
-  ): Promise<ApiSuccessResponse<FindAllTransactionsResponse[]>> {
-    const transactions: Transaction<['category']>[] =
-      await this.prismaService.transaction.findMany({
-        where: { userId: user.id },
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResponse<FindAllTransactionsResponse>> {
+    const [count, transactions] = await this.prismaService.$transaction([
+      this.prismaService.transaction.count({
+        where: {
+          userId: user.id,
+        },
+      }),
+      this.prismaService.transaction.findMany({
+        where: {
+          userId: user.id,
+        },
         include: {
           category: true,
         },
-      });
+        skip: paginationDto.skip,
+        take: paginationDto.limit,
+        orderBy: paginationDto.orderBy,
+      }),
+    ]);
 
-    return ApiSuccessResponse.of(
-      transactions.map(
-        (t: Transaction<['category']>): FindAllTransactionsResponse =>
-          FindAllTransactionsResponse.wrapper(t),
-      ),
+    return PaginatedResponse.of(
+      transactions.map((t) => FindAllTransactionsResponse.wrapper(t)),
+      {
+        ...paginationDto,
+        totalCount: count,
+      },
     );
   }
 }
