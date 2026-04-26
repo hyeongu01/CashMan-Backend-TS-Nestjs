@@ -904,6 +904,7 @@ export const TransactionScalarFieldEnum = {
   accountId: 'accountId',
   amount: 'amount',
   currency: 'currency',
+  name: 'name',
   transactionDate: 'transactionDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -916,7 +917,8 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   groupType: 'groupType',
-  name: 'name'
+  name: 'name',
+  budget: 'budget'
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -981,7 +983,8 @@ export const transactionOrderByRelevanceFieldEnum = {
   userId: 'userId',
   categoryId: 'categoryId',
   accountId: 'accountId',
-  currency: 'currency'
+  currency: 'currency',
+  name: 'name'
 } as const
 
 export type transactionOrderByRelevanceFieldEnum = (typeof transactionOrderByRelevanceFieldEnum)[keyof typeof transactionOrderByRelevanceFieldEnum]

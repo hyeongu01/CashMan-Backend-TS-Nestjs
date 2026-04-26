@@ -28,10 +28,12 @@ export type AggregateCategory = {
 
 export type CategoryAvgAggregateOutputType = {
   groupType: number | null
+  budget: number | null
 }
 
 export type CategorySumAggregateOutputType = {
   groupType: number | null
+  budget: number | null
 }
 
 export type CategoryMinAggregateOutputType = {
@@ -39,6 +41,7 @@ export type CategoryMinAggregateOutputType = {
   userId: string | null
   groupType: number | null
   name: string | null
+  budget: number | null
 }
 
 export type CategoryMaxAggregateOutputType = {
@@ -46,6 +49,7 @@ export type CategoryMaxAggregateOutputType = {
   userId: string | null
   groupType: number | null
   name: string | null
+  budget: number | null
 }
 
 export type CategoryCountAggregateOutputType = {
@@ -53,16 +57,19 @@ export type CategoryCountAggregateOutputType = {
   userId: number
   groupType: number
   name: number
+  budget: number
   _all: number
 }
 
 
 export type CategoryAvgAggregateInputType = {
   groupType?: true
+  budget?: true
 }
 
 export type CategorySumAggregateInputType = {
   groupType?: true
+  budget?: true
 }
 
 export type CategoryMinAggregateInputType = {
@@ -70,6 +77,7 @@ export type CategoryMinAggregateInputType = {
   userId?: true
   groupType?: true
   name?: true
+  budget?: true
 }
 
 export type CategoryMaxAggregateInputType = {
@@ -77,6 +85,7 @@ export type CategoryMaxAggregateInputType = {
   userId?: true
   groupType?: true
   name?: true
+  budget?: true
 }
 
 export type CategoryCountAggregateInputType = {
@@ -84,6 +93,7 @@ export type CategoryCountAggregateInputType = {
   userId?: true
   groupType?: true
   name?: true
+  budget?: true
   _all?: true
 }
 
@@ -178,6 +188,7 @@ export type CategoryGroupByOutputType = {
   userId: string
   groupType: number
   name: string
+  budget: number | null
   _count: CategoryCountAggregateOutputType | null
   _avg: CategoryAvgAggregateOutputType | null
   _sum: CategorySumAggregateOutputType | null
@@ -208,6 +219,7 @@ export type categoryWhereInput = {
   userId?: Prisma.StringFilter<"category"> | string
   groupType?: Prisma.IntFilter<"category"> | number
   name?: Prisma.StringFilter<"category"> | string
+  budget?: Prisma.IntNullableFilter<"category"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
   transactions?: Prisma.TransactionListRelationFilter
 }
@@ -217,6 +229,7 @@ export type categoryOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  budget?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.userOrderByWithRelationInput
   transactions?: Prisma.transactionOrderByRelationAggregateInput
   _relevance?: Prisma.categoryOrderByRelevanceInput
@@ -231,6 +244,7 @@ export type categoryWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"category"> | string
   groupType?: Prisma.IntFilter<"category"> | number
   name?: Prisma.StringFilter<"category"> | string
+  budget?: Prisma.IntNullableFilter<"category"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
   transactions?: Prisma.TransactionListRelationFilter
 }, "id" | "userId_name_groupType">
@@ -240,6 +254,7 @@ export type categoryOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  budget?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.categoryCountOrderByAggregateInput
   _avg?: Prisma.categoryAvgOrderByAggregateInput
   _max?: Prisma.categoryMaxOrderByAggregateInput
@@ -255,12 +270,14 @@ export type categoryScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"category"> | string
   groupType?: Prisma.IntWithAggregatesFilter<"category"> | number
   name?: Prisma.StringWithAggregatesFilter<"category"> | string
+  budget?: Prisma.IntNullableWithAggregatesFilter<"category"> | number | null
 }
 
 export type categoryCreateInput = {
   id?: string
   groupType: number
   name: string
+  budget?: number | null
   user: Prisma.userCreateNestedOneWithoutCategoriesInput
   transactions?: Prisma.transactionCreateNestedManyWithoutCategoryInput
 }
@@ -270,6 +287,7 @@ export type categoryUncheckedCreateInput = {
   userId: string
   groupType: number
   name: string
+  budget?: number | null
   transactions?: Prisma.transactionUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -277,6 +295,7 @@ export type categoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   user?: Prisma.userUpdateOneRequiredWithoutCategoriesNestedInput
   transactions?: Prisma.transactionUpdateManyWithoutCategoryNestedInput
 }
@@ -286,6 +305,7 @@ export type categoryUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   transactions?: Prisma.transactionUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -294,12 +314,14 @@ export type categoryCreateManyInput = {
   userId: string
   groupType: number
   name: string
+  budget?: number | null
 }
 
 export type categoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type categoryUncheckedUpdateManyInput = {
@@ -307,6 +329,7 @@ export type categoryUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type CategoryListRelationFilter = {
@@ -341,10 +364,12 @@ export type categoryCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  budget?: Prisma.SortOrder
 }
 
 export type categoryAvgOrderByAggregateInput = {
   groupType?: Prisma.SortOrder
+  budget?: Prisma.SortOrder
 }
 
 export type categoryMaxOrderByAggregateInput = {
@@ -352,6 +377,7 @@ export type categoryMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  budget?: Prisma.SortOrder
 }
 
 export type categoryMinOrderByAggregateInput = {
@@ -359,10 +385,12 @@ export type categoryMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  budget?: Prisma.SortOrder
 }
 
 export type categorySumOrderByAggregateInput = {
   groupType?: Prisma.SortOrder
+  budget?: Prisma.SortOrder
 }
 
 export type categoryCreateNestedManyWithoutUserInput = {
@@ -423,10 +451,19 @@ export type categoryUpdateOneWithoutTransactionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.categoryUpdateToOneWithWhereWithoutTransactionsInput, Prisma.categoryUpdateWithoutTransactionsInput>, Prisma.categoryUncheckedUpdateWithoutTransactionsInput>
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type categoryCreateWithoutUserInput = {
   id?: string
   groupType: number
   name: string
+  budget?: number | null
   transactions?: Prisma.transactionCreateNestedManyWithoutCategoryInput
 }
 
@@ -434,6 +471,7 @@ export type categoryUncheckedCreateWithoutUserInput = {
   id?: string
   groupType: number
   name: string
+  budget?: number | null
   transactions?: Prisma.transactionUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -471,12 +509,14 @@ export type categoryScalarWhereInput = {
   userId?: Prisma.StringFilter<"category"> | string
   groupType?: Prisma.IntFilter<"category"> | number
   name?: Prisma.StringFilter<"category"> | string
+  budget?: Prisma.IntNullableFilter<"category"> | number | null
 }
 
 export type categoryCreateWithoutTransactionsInput = {
   id?: string
   groupType: number
   name: string
+  budget?: number | null
   user: Prisma.userCreateNestedOneWithoutCategoriesInput
 }
 
@@ -485,6 +525,7 @@ export type categoryUncheckedCreateWithoutTransactionsInput = {
   userId: string
   groupType: number
   name: string
+  budget?: number | null
 }
 
 export type categoryCreateOrConnectWithoutTransactionsInput = {
@@ -507,6 +548,7 @@ export type categoryUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   user?: Prisma.userUpdateOneRequiredWithoutCategoriesNestedInput
 }
 
@@ -515,18 +557,21 @@ export type categoryUncheckedUpdateWithoutTransactionsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type categoryCreateManyUserInput = {
   id?: string
   groupType: number
   name: string
+  budget?: number | null
 }
 
 export type categoryUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   transactions?: Prisma.transactionUpdateManyWithoutCategoryNestedInput
 }
 
@@ -534,6 +579,7 @@ export type categoryUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   transactions?: Prisma.transactionUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -541,6 +587,7 @@ export type categoryUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -579,6 +626,7 @@ export type categorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   userId?: boolean
   groupType?: boolean
   name?: boolean
+  budget?: boolean
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.category$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -591,9 +639,10 @@ export type categorySelectScalar = {
   userId?: boolean
   groupType?: boolean
   name?: boolean
+  budget?: boolean
 }
 
-export type categoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "groupType" | "name", ExtArgs["result"]["category"]>
+export type categoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "groupType" | "name" | "budget", ExtArgs["result"]["category"]>
 export type categoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.category$transactionsArgs<ExtArgs>
@@ -611,6 +660,7 @@ export type $categoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     userId: string
     groupType: number
     name: string
+    budget: number | null
   }, ExtArgs["result"]["category"]>
   composites: {}
 }
@@ -986,6 +1036,7 @@ export interface categoryFieldRefs {
   readonly userId: Prisma.FieldRef<"category", 'String'>
   readonly groupType: Prisma.FieldRef<"category", 'Int'>
   readonly name: Prisma.FieldRef<"category", 'String'>
+  readonly budget: Prisma.FieldRef<"category", 'Int'>
 }
     
 

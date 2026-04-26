@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { type user, type transaction } from '@generated/prisma/client';
 import { CreateTransactionsDto } from '@modules/transactions/dto/create-transactions.dto';
 import { ApiSuccessResponse } from '@common/response/api-response';
+import { ulid } from 'ulid';
 
 @Injectable()
 export class TransactionsService {
@@ -14,9 +15,11 @@ export class TransactionsService {
   ): Promise<ApiSuccessResponse<object>> {
     await this.prismaService.transaction.create({
       data: {
+        id: ulid(),
         ...createTransactionDto,
         userId: user.id,
         currency: user.currency,
+        transactionDate: new Date(createTransactionDto.transactionDate),
       },
     });
     return ApiSuccessResponse.of({});
@@ -26,6 +29,9 @@ export class TransactionsService {
     const transactions: transaction[] =
       await this.prismaService.transaction.findMany({
         where: { userId: user.id },
+        include: {
+          category: true,
+        },
       });
 
     return ApiSuccessResponse.of(transactions);

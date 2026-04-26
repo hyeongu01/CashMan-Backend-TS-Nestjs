@@ -44,6 +44,7 @@ export type TransactionMinAggregateOutputType = {
   accountId: string | null
   amount: number | null
   currency: string | null
+  name: string | null
   transactionDate: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -57,6 +58,7 @@ export type TransactionMaxAggregateOutputType = {
   accountId: string | null
   amount: number | null
   currency: string | null
+  name: string | null
   transactionDate: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -70,6 +72,7 @@ export type TransactionCountAggregateOutputType = {
   accountId: number
   amount: number
   currency: number
+  name: number
   transactionDate: number
   createdAt: number
   updatedAt: number
@@ -95,6 +98,7 @@ export type TransactionMinAggregateInputType = {
   accountId?: true
   amount?: true
   currency?: true
+  name?: true
   transactionDate?: true
   createdAt?: true
   updatedAt?: true
@@ -108,6 +112,7 @@ export type TransactionMaxAggregateInputType = {
   accountId?: true
   amount?: true
   currency?: true
+  name?: true
   transactionDate?: true
   createdAt?: true
   updatedAt?: true
@@ -121,6 +126,7 @@ export type TransactionCountAggregateInputType = {
   accountId?: true
   amount?: true
   currency?: true
+  name?: true
   transactionDate?: true
   createdAt?: true
   updatedAt?: true
@@ -221,6 +227,7 @@ export type TransactionGroupByOutputType = {
   accountId: string | null
   amount: number
   currency: string
+  name: string
   transactionDate: Date
   createdAt: Date
   updatedAt: Date
@@ -257,6 +264,7 @@ export type transactionWhereInput = {
   accountId?: Prisma.StringNullableFilter<"transaction"> | string | null
   amount?: Prisma.IntFilter<"transaction"> | number
   currency?: Prisma.StringFilter<"transaction"> | string
+  name?: Prisma.StringFilter<"transaction"> | string
   transactionDate?: Prisma.DateTimeFilter<"transaction"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
@@ -273,6 +281,7 @@ export type transactionOrderByWithRelationInput = {
   accountId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -293,6 +302,7 @@ export type transactionWhereUniqueInput = Prisma.AtLeast<{
   accountId?: Prisma.StringNullableFilter<"transaction"> | string | null
   amount?: Prisma.IntFilter<"transaction"> | number
   currency?: Prisma.StringFilter<"transaction"> | string
+  name?: Prisma.StringFilter<"transaction"> | string
   transactionDate?: Prisma.DateTimeFilter<"transaction"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
@@ -309,6 +319,7 @@ export type transactionOrderByWithAggregationInput = {
   accountId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -330,6 +341,7 @@ export type transactionScalarWhereWithAggregatesInput = {
   accountId?: Prisma.StringNullableWithAggregatesFilter<"transaction"> | string | null
   amount?: Prisma.IntWithAggregatesFilter<"transaction"> | number
   currency?: Prisma.StringWithAggregatesFilter<"transaction"> | string
+  name?: Prisma.StringWithAggregatesFilter<"transaction"> | string
   transactionDate?: Prisma.DateTimeWithAggregatesFilter<"transaction"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"transaction"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"transaction"> | Date | string
@@ -340,6 +352,7 @@ export type transactionCreateInput = {
   type: number
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -356,6 +369,7 @@ export type transactionUncheckedCreateInput = {
   accountId?: string | null
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -366,6 +380,7 @@ export type transactionUpdateInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -382,6 +397,7 @@ export type transactionUncheckedUpdateInput = {
   accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -395,6 +411,7 @@ export type transactionCreateManyInput = {
   accountId?: string | null
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -405,6 +422,7 @@ export type transactionUpdateManyMutationInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -418,6 +436,7 @@ export type transactionUncheckedUpdateManyInput = {
   accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -447,6 +466,7 @@ export type transactionCountOrderByAggregateInput = {
   accountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -465,6 +485,7 @@ export type transactionMaxOrderByAggregateInput = {
   accountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -478,6 +499,7 @@ export type transactionMinOrderByAggregateInput = {
   accountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -623,6 +645,7 @@ export type transactionCreateWithoutUserInput = {
   type: number
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -637,6 +660,7 @@ export type transactionUncheckedCreateWithoutUserInput = {
   accountId?: string | null
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -679,6 +703,7 @@ export type transactionScalarWhereInput = {
   accountId?: Prisma.StringNullableFilter<"transaction"> | string | null
   amount?: Prisma.IntFilter<"transaction"> | number
   currency?: Prisma.StringFilter<"transaction"> | string
+  name?: Prisma.StringFilter<"transaction"> | string
   transactionDate?: Prisma.DateTimeFilter<"transaction"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
@@ -689,6 +714,7 @@ export type transactionCreateWithoutFrom_accountInput = {
   type: number
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -703,6 +729,7 @@ export type transactionUncheckedCreateWithoutFrom_accountInput = {
   categoryId?: string | null
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -739,6 +766,7 @@ export type transactionCreateWithoutCategoryInput = {
   type: number
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -753,6 +781,7 @@ export type transactionUncheckedCreateWithoutCategoryInput = {
   accountId?: string | null
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -791,6 +820,7 @@ export type transactionCreateManyUserInput = {
   accountId?: string | null
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -801,6 +831,7 @@ export type transactionUpdateWithoutUserInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -815,6 +846,7 @@ export type transactionUncheckedUpdateWithoutUserInput = {
   accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -827,6 +859,7 @@ export type transactionUncheckedUpdateManyWithoutUserInput = {
   accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -839,6 +872,7 @@ export type transactionCreateManyFrom_accountInput = {
   categoryId?: string | null
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -849,6 +883,7 @@ export type transactionUpdateWithoutFrom_accountInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -863,6 +898,7 @@ export type transactionUncheckedUpdateWithoutFrom_accountInput = {
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -875,6 +911,7 @@ export type transactionUncheckedUpdateManyWithoutFrom_accountInput = {
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -887,6 +924,7 @@ export type transactionCreateManyCategoryInput = {
   accountId?: string | null
   amount: number
   currency: string
+  name: string
   transactionDate: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -897,6 +935,7 @@ export type transactionUpdateWithoutCategoryInput = {
   type?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -911,6 +950,7 @@ export type transactionUncheckedUpdateWithoutCategoryInput = {
   accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -923,6 +963,7 @@ export type transactionUncheckedUpdateManyWithoutCategoryInput = {
   accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -938,6 +979,7 @@ export type transactionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   accountId?: boolean
   amount?: boolean
   currency?: boolean
+  name?: boolean
   transactionDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -956,12 +998,13 @@ export type transactionSelectScalar = {
   accountId?: boolean
   amount?: boolean
   currency?: boolean
+  name?: boolean
   transactionDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type transactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "categoryId" | "accountId" | "amount" | "currency" | "transactionDate" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
+export type transactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "categoryId" | "accountId" | "amount" | "currency" | "name" | "transactionDate" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
 export type transactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   category?: boolean | Prisma.transaction$categoryArgs<ExtArgs>
@@ -983,6 +1026,7 @@ export type $transactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     accountId: string | null
     amount: number
     currency: string
+    name: string
     transactionDate: Date
     createdAt: Date
     updatedAt: Date
@@ -1365,6 +1409,7 @@ export interface transactionFieldRefs {
   readonly accountId: Prisma.FieldRef<"transaction", 'String'>
   readonly amount: Prisma.FieldRef<"transaction", 'Int'>
   readonly currency: Prisma.FieldRef<"transaction", 'String'>
+  readonly name: Prisma.FieldRef<"transaction", 'String'>
   readonly transactionDate: Prisma.FieldRef<"transaction", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"transaction", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"transaction", 'DateTime'>

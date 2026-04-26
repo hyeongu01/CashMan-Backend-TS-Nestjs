@@ -101,6 +101,7 @@ model transaction {
   accountId       String?  @map("from_account_id") @db.Char(26)
   amount          Int
   currency        String   @db.Char(3) // CURRENCY_CODE 따름
+  name            String   @db.VarChar(128)
   transactionDate DateTime @map("transaction_date") @db.Date
   createdAt       DateTime @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt       DateTime @updatedAt @map("updated_at") @db.DateTime(0)

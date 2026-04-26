@@ -3,7 +3,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { PrismaService } from '@infra/prisma/prisma.service';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { type user, type category } from '@generated/prisma/client';
-import { type CategoryResponse } from './response/category.response';
+import { CategoryResponse } from './response/category.response';
 import {
   ApiSuccessResponse,
   ApiErrorResponse,
@@ -45,7 +45,7 @@ export class CategoriesService {
     return ApiSuccessResponse.of(
       categories.map(
         (category: category): CategoryResponse =>
-          this.categoryWrapper(category),
+          CategoryResponse.wrapper(category),
       ),
     );
   }
@@ -80,13 +80,5 @@ export class CategoriesService {
       where: { id },
     });
     return ApiSuccessResponse.of({});
-  }
-
-  private categoryWrapper(category: category): CategoryResponse {
-    return {
-      id: category.id,
-      groupType: category.groupType,
-      name: category.name,
-    };
   }
 }
