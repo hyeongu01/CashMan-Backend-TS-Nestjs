@@ -917,6 +917,8 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   groupType: 'groupType',
+  iconKey: 'iconKey',
+  iconColor: 'iconColor',
   name: 'name',
   budget: 'budget'
 } as const
@@ -993,6 +995,8 @@ export type transactionOrderByRelevanceFieldEnum = (typeof transactionOrderByRel
 export const categoryOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
+  iconKey: 'iconKey',
+  iconColor: 'iconColor',
   name: 'name'
 } as const
 

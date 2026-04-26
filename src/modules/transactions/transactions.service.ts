@@ -31,7 +31,9 @@ export class TransactionsService {
   async findAll(
     user: user,
     paginationDto: PaginationDto,
-  ): Promise<PaginatedResponse<FindAllTransactionsResponse>> {
+  ): Promise<
+    ApiSuccessResponse<PaginatedResponse<FindAllTransactionsResponse>>
+  > {
     const [count, transactions] = await this.prismaService.$transaction([
       this.prismaService.transaction.count({
         where: {
@@ -51,12 +53,14 @@ export class TransactionsService {
       }),
     ]);
 
-    return PaginatedResponse.of(
-      transactions.map((t) => FindAllTransactionsResponse.wrapper(t)),
-      {
-        ...paginationDto,
-        totalCount: count,
-      },
+    return ApiSuccessResponse.of(
+      PaginatedResponse.of(
+        transactions.map((t) => FindAllTransactionsResponse.wrapper(t)),
+        {
+          ...paginationDto,
+          totalCount: count,
+        },
+      ),
     );
   }
 }

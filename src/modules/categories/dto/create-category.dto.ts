@@ -11,4 +11,14 @@ export class CreateCategoryDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  iconKey: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  iconColor: string;
 }

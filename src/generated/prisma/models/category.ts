@@ -40,6 +40,8 @@ export type CategoryMinAggregateOutputType = {
   id: string | null
   userId: string | null
   groupType: number | null
+  iconKey: string | null
+  iconColor: string | null
   name: string | null
   budget: number | null
 }
@@ -48,6 +50,8 @@ export type CategoryMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   groupType: number | null
+  iconKey: string | null
+  iconColor: string | null
   name: string | null
   budget: number | null
 }
@@ -56,6 +60,8 @@ export type CategoryCountAggregateOutputType = {
   id: number
   userId: number
   groupType: number
+  iconKey: number
+  iconColor: number
   name: number
   budget: number
   _all: number
@@ -76,6 +82,8 @@ export type CategoryMinAggregateInputType = {
   id?: true
   userId?: true
   groupType?: true
+  iconKey?: true
+  iconColor?: true
   name?: true
   budget?: true
 }
@@ -84,6 +92,8 @@ export type CategoryMaxAggregateInputType = {
   id?: true
   userId?: true
   groupType?: true
+  iconKey?: true
+  iconColor?: true
   name?: true
   budget?: true
 }
@@ -92,6 +102,8 @@ export type CategoryCountAggregateInputType = {
   id?: true
   userId?: true
   groupType?: true
+  iconKey?: true
+  iconColor?: true
   name?: true
   budget?: true
   _all?: true
@@ -187,6 +199,8 @@ export type CategoryGroupByOutputType = {
   id: string
   userId: string
   groupType: number
+  iconKey: string
+  iconColor: string
   name: string
   budget: number | null
   _count: CategoryCountAggregateOutputType | null
@@ -218,6 +232,8 @@ export type categoryWhereInput = {
   id?: Prisma.StringFilter<"category"> | string
   userId?: Prisma.StringFilter<"category"> | string
   groupType?: Prisma.IntFilter<"category"> | number
+  iconKey?: Prisma.StringFilter<"category"> | string
+  iconColor?: Prisma.StringFilter<"category"> | string
   name?: Prisma.StringFilter<"category"> | string
   budget?: Prisma.IntNullableFilter<"category"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
@@ -228,6 +244,8 @@ export type categoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
+  iconKey?: Prisma.SortOrder
+  iconColor?: Prisma.SortOrder
   name?: Prisma.SortOrder
   budget?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.userOrderByWithRelationInput
@@ -243,6 +261,8 @@ export type categoryWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.categoryWhereInput | Prisma.categoryWhereInput[]
   userId?: Prisma.StringFilter<"category"> | string
   groupType?: Prisma.IntFilter<"category"> | number
+  iconKey?: Prisma.StringFilter<"category"> | string
+  iconColor?: Prisma.StringFilter<"category"> | string
   name?: Prisma.StringFilter<"category"> | string
   budget?: Prisma.IntNullableFilter<"category"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
@@ -253,6 +273,8 @@ export type categoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
+  iconKey?: Prisma.SortOrder
+  iconColor?: Prisma.SortOrder
   name?: Prisma.SortOrder
   budget?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.categoryCountOrderByAggregateInput
@@ -269,6 +291,8 @@ export type categoryScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"category"> | string
   userId?: Prisma.StringWithAggregatesFilter<"category"> | string
   groupType?: Prisma.IntWithAggregatesFilter<"category"> | number
+  iconKey?: Prisma.StringWithAggregatesFilter<"category"> | string
+  iconColor?: Prisma.StringWithAggregatesFilter<"category"> | string
   name?: Prisma.StringWithAggregatesFilter<"category"> | string
   budget?: Prisma.IntNullableWithAggregatesFilter<"category"> | number | null
 }
@@ -276,6 +300,8 @@ export type categoryScalarWhereWithAggregatesInput = {
 export type categoryCreateInput = {
   id?: string
   groupType: number
+  iconKey: string
+  iconColor: string
   name: string
   budget?: number | null
   user: Prisma.userCreateNestedOneWithoutCategoriesInput
@@ -286,6 +312,8 @@ export type categoryUncheckedCreateInput = {
   id?: string
   userId: string
   groupType: number
+  iconKey: string
+  iconColor: string
   name: string
   budget?: number | null
   transactions?: Prisma.transactionUncheckedCreateNestedManyWithoutCategoryInput
@@ -294,6 +322,8 @@ export type categoryUncheckedCreateInput = {
 export type categoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
+  iconKey?: Prisma.StringFieldUpdateOperationsInput | string
+  iconColor?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   user?: Prisma.userUpdateOneRequiredWithoutCategoriesNestedInput
@@ -304,6 +334,8 @@ export type categoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
+  iconKey?: Prisma.StringFieldUpdateOperationsInput | string
+  iconColor?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   transactions?: Prisma.transactionUncheckedUpdateManyWithoutCategoryNestedInput
@@ -313,6 +345,8 @@ export type categoryCreateManyInput = {
   id?: string
   userId: string
   groupType: number
+  iconKey: string
+  iconColor: string
   name: string
   budget?: number | null
 }
@@ -320,6 +354,8 @@ export type categoryCreateManyInput = {
 export type categoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
+  iconKey?: Prisma.StringFieldUpdateOperationsInput | string
+  iconColor?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -328,6 +364,8 @@ export type categoryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
+  iconKey?: Prisma.StringFieldUpdateOperationsInput | string
+  iconColor?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -363,6 +401,8 @@ export type categoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
+  iconKey?: Prisma.SortOrder
+  iconColor?: Prisma.SortOrder
   name?: Prisma.SortOrder
   budget?: Prisma.SortOrder
 }
@@ -376,6 +416,8 @@ export type categoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
+  iconKey?: Prisma.SortOrder
+  iconColor?: Prisma.SortOrder
   name?: Prisma.SortOrder
   budget?: Prisma.SortOrder
 }
@@ -384,6 +426,8 @@ export type categoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   groupType?: Prisma.SortOrder
+  iconKey?: Prisma.SortOrder
+  iconColor?: Prisma.SortOrder
   name?: Prisma.SortOrder
   budget?: Prisma.SortOrder
 }
@@ -462,6 +506,8 @@ export type NullableIntFieldUpdateOperationsInput = {
 export type categoryCreateWithoutUserInput = {
   id?: string
   groupType: number
+  iconKey: string
+  iconColor: string
   name: string
   budget?: number | null
   transactions?: Prisma.transactionCreateNestedManyWithoutCategoryInput
@@ -470,6 +516,8 @@ export type categoryCreateWithoutUserInput = {
 export type categoryUncheckedCreateWithoutUserInput = {
   id?: string
   groupType: number
+  iconKey: string
+  iconColor: string
   name: string
   budget?: number | null
   transactions?: Prisma.transactionUncheckedCreateNestedManyWithoutCategoryInput
@@ -508,6 +556,8 @@ export type categoryScalarWhereInput = {
   id?: Prisma.StringFilter<"category"> | string
   userId?: Prisma.StringFilter<"category"> | string
   groupType?: Prisma.IntFilter<"category"> | number
+  iconKey?: Prisma.StringFilter<"category"> | string
+  iconColor?: Prisma.StringFilter<"category"> | string
   name?: Prisma.StringFilter<"category"> | string
   budget?: Prisma.IntNullableFilter<"category"> | number | null
 }
@@ -515,6 +565,8 @@ export type categoryScalarWhereInput = {
 export type categoryCreateWithoutTransactionsInput = {
   id?: string
   groupType: number
+  iconKey: string
+  iconColor: string
   name: string
   budget?: number | null
   user: Prisma.userCreateNestedOneWithoutCategoriesInput
@@ -524,6 +576,8 @@ export type categoryUncheckedCreateWithoutTransactionsInput = {
   id?: string
   userId: string
   groupType: number
+  iconKey: string
+  iconColor: string
   name: string
   budget?: number | null
 }
@@ -547,6 +601,8 @@ export type categoryUpdateToOneWithWhereWithoutTransactionsInput = {
 export type categoryUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
+  iconKey?: Prisma.StringFieldUpdateOperationsInput | string
+  iconColor?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   user?: Prisma.userUpdateOneRequiredWithoutCategoriesNestedInput
@@ -556,6 +612,8 @@ export type categoryUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
+  iconKey?: Prisma.StringFieldUpdateOperationsInput | string
+  iconColor?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -563,6 +621,8 @@ export type categoryUncheckedUpdateWithoutTransactionsInput = {
 export type categoryCreateManyUserInput = {
   id?: string
   groupType: number
+  iconKey: string
+  iconColor: string
   name: string
   budget?: number | null
 }
@@ -570,6 +630,8 @@ export type categoryCreateManyUserInput = {
 export type categoryUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
+  iconKey?: Prisma.StringFieldUpdateOperationsInput | string
+  iconColor?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   transactions?: Prisma.transactionUpdateManyWithoutCategoryNestedInput
@@ -578,6 +640,8 @@ export type categoryUpdateWithoutUserInput = {
 export type categoryUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
+  iconKey?: Prisma.StringFieldUpdateOperationsInput | string
+  iconColor?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   transactions?: Prisma.transactionUncheckedUpdateManyWithoutCategoryNestedInput
@@ -586,6 +650,8 @@ export type categoryUncheckedUpdateWithoutUserInput = {
 export type categoryUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupType?: Prisma.IntFieldUpdateOperationsInput | number
+  iconKey?: Prisma.StringFieldUpdateOperationsInput | string
+  iconColor?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   budget?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -625,6 +691,8 @@ export type categorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   userId?: boolean
   groupType?: boolean
+  iconKey?: boolean
+  iconColor?: boolean
   name?: boolean
   budget?: boolean
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
@@ -638,11 +706,13 @@ export type categorySelectScalar = {
   id?: boolean
   userId?: boolean
   groupType?: boolean
+  iconKey?: boolean
+  iconColor?: boolean
   name?: boolean
   budget?: boolean
 }
 
-export type categoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "groupType" | "name" | "budget", ExtArgs["result"]["category"]>
+export type categoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "groupType" | "iconKey" | "iconColor" | "name" | "budget", ExtArgs["result"]["category"]>
 export type categoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.category$transactionsArgs<ExtArgs>
@@ -659,6 +729,8 @@ export type $categoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     userId: string
     groupType: number
+    iconKey: string
+    iconColor: string
     name: string
     budget: number | null
   }, ExtArgs["result"]["category"]>
@@ -1035,6 +1107,8 @@ export interface categoryFieldRefs {
   readonly id: Prisma.FieldRef<"category", 'String'>
   readonly userId: Prisma.FieldRef<"category", 'String'>
   readonly groupType: Prisma.FieldRef<"category", 'Int'>
+  readonly iconKey: Prisma.FieldRef<"category", 'String'>
+  readonly iconColor: Prisma.FieldRef<"category", 'String'>
   readonly name: Prisma.FieldRef<"category", 'String'>
   readonly budget: Prisma.FieldRef<"category", 'Int'>
 }

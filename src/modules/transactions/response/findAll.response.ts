@@ -20,6 +20,9 @@ export class FindAllTransactionsResponse {
   @ApiProperty()
   transactionDate: string;
 
+  @ApiProperty()
+  amount: number;
+
   static wrapper(
     transaction: Transaction<['category']>,
   ): FindAllTransactionsResponse {
@@ -31,6 +34,7 @@ export class FindAllTransactionsResponse {
       }),
       name: transaction.name,
       transactionDate: transaction.transactionDate.toISOString().split('T')[0],
+      amount: transaction.amount,
     };
   }
 }

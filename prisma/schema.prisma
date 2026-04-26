@@ -117,6 +117,8 @@ model category {
   id        String @id @default(dbgenerated()) @db.Char(26)
   userId    String @map("user_id") @db.Char(26)
   groupType Int    @map("group_type") @db.UnsignedTinyInt // 0: 기본 계좌, 1: 저축 계좌, 2: 투자 계좌
+  iconKey   String @db.VarChar(100)
+  iconColor String @db.VarChar(30)
   name      String @db.VarChar(50)
   budget    Int?
 

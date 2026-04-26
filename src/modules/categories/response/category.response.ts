@@ -11,11 +11,19 @@ export class CategoryResponse {
   @ApiProperty()
   name: string;
 
+  @ApiProperty()
+  iconKey: string;
+
+  @ApiProperty()
+  iconColor: string;
+
   static wrapper(category: category): CategoryResponse {
     return {
       id: category.id,
       groupType: category.groupType,
       name: category.name,
+      iconKey: category.iconKey,
+      iconColor: category.iconColor,
     } as CategoryResponse;
   }
 }
