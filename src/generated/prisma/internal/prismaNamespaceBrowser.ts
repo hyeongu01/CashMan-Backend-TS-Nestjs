@@ -148,6 +148,7 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   groupType: 'groupType',
+  transactionType: 'transactionType',
   iconKey: 'iconKey',
   iconColor: 'iconColor',
   name: 'name',

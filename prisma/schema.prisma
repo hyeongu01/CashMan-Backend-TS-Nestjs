@@ -88,6 +88,7 @@ model account {
 
   user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  // TODO: 이름 transactions 으로 변경
   outgoing_transactions transaction[]
 
   @@unique([userId, groupType, currency])
@@ -96,7 +97,7 @@ model account {
 model transaction {
   id              String   @id @default(dbgenerated()) @db.Char(26)
   userId          String   @map("user_id") @db.Char(26)
-  type            Int      @map("type") @db.UnsignedTinyInt // 0: 수입, 1: 지출, 2: 저축 추가, 3: 저축 취소, 4: 투자 추가, 5: 투자 취소
+  type            Int      @map("type") @db.UnsignedTinyInt // 0: 수입, 1: 지출 (계좌에 해당하는 수입, 지출 여부)
   categoryId      String?  @map("category_id") @db.Char(26)
   accountId       String?  @map("from_account_id") @db.Char(26)
   amount          Int
@@ -108,19 +109,21 @@ model transaction {
 
   user         user      @relation(fields: [userId], references: [id], onDelete: Cascade)
   category     category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  // TODO: 이름 account 로 변경
   from_account account?  @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
   @@index([userId, transactionDate])
 }
 
 model category {
-  id        String @id @default(dbgenerated()) @db.Char(26)
-  userId    String @map("user_id") @db.Char(26)
-  groupType Int    @map("group_type") @db.UnsignedTinyInt // 0: 기본 계좌, 1: 저축 계좌, 2: 투자 계좌
-  iconKey   String @db.VarChar(100)
-  iconColor String @db.VarChar(30)
-  name      String @db.VarChar(50)
-  budget    Int?
+  id              String @id @default(dbgenerated()) @db.Char(26)
+  userId          String @map("user_id") @db.Char(26)
+  groupType       Int    @map("group_type") @db.UnsignedTinyInt // 0: 기본 계좌, 1: 저축 계좌, 2: 투자 계좌
+  transactionType Int    @map("transaction_type") @db.UnsignedInt // 0: 수입, 1: 지출 (계좌에 해당하는 수입, 지출 여부)
+  iconKey         String @db.VarChar(100)
+  iconColor       String @db.VarChar(30)
+  name            String @db.VarChar(50)
+  budget          Int?
 
   user user @relation(fields: [userId], references: [id], onDelete: Cascade)
 

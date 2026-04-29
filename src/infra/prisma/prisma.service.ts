@@ -16,9 +16,10 @@ export class PrismaService
   private readonly logger = new Logger(PrismaService.name);
 
   constructor(configService: ConfigService) {
-    const adapter = new PrismaMariaDb(
-      configService.getOrThrow<string>('DATABASE_URL'),
-    );
+    const url = new URL(configService.getOrThrow<string>('DATABASE_URL'));
+    url.searchParams.set('allowPublicKeyRetrieval', 'true');
+
+    const adapter = new PrismaMariaDb(url.toString());
     super({ adapter });
   }
 
