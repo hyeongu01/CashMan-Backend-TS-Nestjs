@@ -62,7 +62,7 @@ CREATE TABLE `transaction` (
     `user_id` CHAR(26) NOT NULL,
     `type` TINYINT UNSIGNED NOT NULL,
     `category_id` CHAR(26) NULL,
-    `from_account_id` CHAR(26) NULL,
+    `from_account_id` CHAR(26) NOT NULL,
     `amount` INTEGER NOT NULL,
     `currency` CHAR(3) NOT NULL,
     `name` VARCHAR(128) NOT NULL,

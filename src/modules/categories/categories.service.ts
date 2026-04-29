@@ -29,6 +29,7 @@ export class CategoriesService {
       data: {
         id: ulid(),
         ...createCategoryDto,
+
         userId: user.id,
       },
     });

@@ -11,3 +11,10 @@ export type Transaction<
       };
     }>
   : transaction;
+
+/**
+ * 거래 타입
+ * - 0: 지출
+ * - 1: 수입
+ */
+export type TransactionType = 0 | 1;

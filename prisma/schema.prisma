@@ -86,10 +86,8 @@ model account {
   createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt DateTime @updatedAt @map("updated_at") @db.DateTime(0)
 
-  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  // TODO: 이름 transactions 으로 변경
-  outgoing_transactions transaction[]
+  user         user          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions transaction[]
 
   @@unique([userId, groupType, currency])
 }
@@ -99,7 +97,7 @@ model transaction {
   userId          String   @map("user_id") @db.Char(26)
   type            Int      @map("type") @db.UnsignedTinyInt // 0: 수입, 1: 지출 (계좌에 해당하는 수입, 지출 여부)
   categoryId      String?  @map("category_id") @db.Char(26)
-  accountId       String?  @map("from_account_id") @db.Char(26)
+  accountId       String   @map("from_account_id") @db.Char(26)
   amount          Int
   currency        String   @db.Char(3) // CURRENCY_CODE 따름
   name            String   @db.VarChar(128)
@@ -107,10 +105,9 @@ model transaction {
   createdAt       DateTime @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt       DateTime @updatedAt @map("updated_at") @db.DateTime(0)
 
-  user         user      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  category     category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  // TODO: 이름 account 로 변경
-  from_account account?  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  user     user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  account  account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
   @@index([userId, transactionDate])
 }

@@ -224,7 +224,7 @@ export type TransactionGroupByOutputType = {
   userId: string
   type: number
   categoryId: string | null
-  accountId: string | null
+  accountId: string
   amount: number
   currency: string
   name: string
@@ -261,7 +261,7 @@ export type transactionWhereInput = {
   userId?: Prisma.StringFilter<"transaction"> | string
   type?: Prisma.IntFilter<"transaction"> | number
   categoryId?: Prisma.StringNullableFilter<"transaction"> | string | null
-  accountId?: Prisma.StringNullableFilter<"transaction"> | string | null
+  accountId?: Prisma.StringFilter<"transaction"> | string
   amount?: Prisma.IntFilter<"transaction"> | number
   currency?: Prisma.StringFilter<"transaction"> | string
   name?: Prisma.StringFilter<"transaction"> | string
@@ -270,7 +270,7 @@ export type transactionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.categoryWhereInput> | null
-  from_account?: Prisma.XOR<Prisma.AccountNullableScalarRelationFilter, Prisma.accountWhereInput> | null
+  account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.accountWhereInput>
 }
 
 export type transactionOrderByWithRelationInput = {
@@ -278,7 +278,7 @@ export type transactionOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
-  accountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -287,7 +287,7 @@ export type transactionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   user?: Prisma.userOrderByWithRelationInput
   category?: Prisma.categoryOrderByWithRelationInput
-  from_account?: Prisma.accountOrderByWithRelationInput
+  account?: Prisma.accountOrderByWithRelationInput
   _relevance?: Prisma.transactionOrderByRelevanceInput
 }
 
@@ -299,7 +299,7 @@ export type transactionWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"transaction"> | string
   type?: Prisma.IntFilter<"transaction"> | number
   categoryId?: Prisma.StringNullableFilter<"transaction"> | string | null
-  accountId?: Prisma.StringNullableFilter<"transaction"> | string | null
+  accountId?: Prisma.StringFilter<"transaction"> | string
   amount?: Prisma.IntFilter<"transaction"> | number
   currency?: Prisma.StringFilter<"transaction"> | string
   name?: Prisma.StringFilter<"transaction"> | string
@@ -308,7 +308,7 @@ export type transactionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.categoryWhereInput> | null
-  from_account?: Prisma.XOR<Prisma.AccountNullableScalarRelationFilter, Prisma.accountWhereInput> | null
+  account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.accountWhereInput>
 }, "id">
 
 export type transactionOrderByWithAggregationInput = {
@@ -316,7 +316,7 @@ export type transactionOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
-  accountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  accountId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -338,7 +338,7 @@ export type transactionScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"transaction"> | string
   type?: Prisma.IntWithAggregatesFilter<"transaction"> | number
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"transaction"> | string | null
-  accountId?: Prisma.StringNullableWithAggregatesFilter<"transaction"> | string | null
+  accountId?: Prisma.StringWithAggregatesFilter<"transaction"> | string
   amount?: Prisma.IntWithAggregatesFilter<"transaction"> | number
   currency?: Prisma.StringWithAggregatesFilter<"transaction"> | string
   name?: Prisma.StringWithAggregatesFilter<"transaction"> | string
@@ -358,7 +358,7 @@ export type transactionCreateInput = {
   updatedAt?: Date | string
   user: Prisma.userCreateNestedOneWithoutTransactionsInput
   category?: Prisma.categoryCreateNestedOneWithoutTransactionsInput
-  from_account?: Prisma.accountCreateNestedOneWithoutOutgoing_transactionsInput
+  account: Prisma.accountCreateNestedOneWithoutTransactionsInput
 }
 
 export type transactionUncheckedCreateInput = {
@@ -366,7 +366,7 @@ export type transactionUncheckedCreateInput = {
   userId: string
   type: number
   categoryId?: string | null
-  accountId?: string | null
+  accountId: string
   amount: number
   currency: string
   name: string
@@ -386,7 +386,7 @@ export type transactionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.userUpdateOneRequiredWithoutTransactionsNestedInput
   category?: Prisma.categoryUpdateOneWithoutTransactionsNestedInput
-  from_account?: Prisma.accountUpdateOneWithoutOutgoing_transactionsNestedInput
+  account?: Prisma.accountUpdateOneRequiredWithoutTransactionsNestedInput
 }
 
 export type transactionUncheckedUpdateInput = {
@@ -394,7 +394,7 @@ export type transactionUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -408,7 +408,7 @@ export type transactionCreateManyInput = {
   userId: string
   type: number
   categoryId?: string | null
-  accountId?: string | null
+  accountId: string
   amount: number
   currency: string
   name: string
@@ -433,7 +433,7 @@ export type transactionUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -552,45 +552,45 @@ export type transactionUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.transactionScalarWhereInput | Prisma.transactionScalarWhereInput[]
 }
 
-export type transactionCreateNestedManyWithoutFrom_accountInput = {
-  create?: Prisma.XOR<Prisma.transactionCreateWithoutFrom_accountInput, Prisma.transactionUncheckedCreateWithoutFrom_accountInput> | Prisma.transactionCreateWithoutFrom_accountInput[] | Prisma.transactionUncheckedCreateWithoutFrom_accountInput[]
-  connectOrCreate?: Prisma.transactionCreateOrConnectWithoutFrom_accountInput | Prisma.transactionCreateOrConnectWithoutFrom_accountInput[]
-  createMany?: Prisma.transactionCreateManyFrom_accountInputEnvelope
+export type transactionCreateNestedManyWithoutAccountInput = {
+  create?: Prisma.XOR<Prisma.transactionCreateWithoutAccountInput, Prisma.transactionUncheckedCreateWithoutAccountInput> | Prisma.transactionCreateWithoutAccountInput[] | Prisma.transactionUncheckedCreateWithoutAccountInput[]
+  connectOrCreate?: Prisma.transactionCreateOrConnectWithoutAccountInput | Prisma.transactionCreateOrConnectWithoutAccountInput[]
+  createMany?: Prisma.transactionCreateManyAccountInputEnvelope
   connect?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
 }
 
-export type transactionUncheckedCreateNestedManyWithoutFrom_accountInput = {
-  create?: Prisma.XOR<Prisma.transactionCreateWithoutFrom_accountInput, Prisma.transactionUncheckedCreateWithoutFrom_accountInput> | Prisma.transactionCreateWithoutFrom_accountInput[] | Prisma.transactionUncheckedCreateWithoutFrom_accountInput[]
-  connectOrCreate?: Prisma.transactionCreateOrConnectWithoutFrom_accountInput | Prisma.transactionCreateOrConnectWithoutFrom_accountInput[]
-  createMany?: Prisma.transactionCreateManyFrom_accountInputEnvelope
+export type transactionUncheckedCreateNestedManyWithoutAccountInput = {
+  create?: Prisma.XOR<Prisma.transactionCreateWithoutAccountInput, Prisma.transactionUncheckedCreateWithoutAccountInput> | Prisma.transactionCreateWithoutAccountInput[] | Prisma.transactionUncheckedCreateWithoutAccountInput[]
+  connectOrCreate?: Prisma.transactionCreateOrConnectWithoutAccountInput | Prisma.transactionCreateOrConnectWithoutAccountInput[]
+  createMany?: Prisma.transactionCreateManyAccountInputEnvelope
   connect?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
 }
 
-export type transactionUpdateManyWithoutFrom_accountNestedInput = {
-  create?: Prisma.XOR<Prisma.transactionCreateWithoutFrom_accountInput, Prisma.transactionUncheckedCreateWithoutFrom_accountInput> | Prisma.transactionCreateWithoutFrom_accountInput[] | Prisma.transactionUncheckedCreateWithoutFrom_accountInput[]
-  connectOrCreate?: Prisma.transactionCreateOrConnectWithoutFrom_accountInput | Prisma.transactionCreateOrConnectWithoutFrom_accountInput[]
-  upsert?: Prisma.transactionUpsertWithWhereUniqueWithoutFrom_accountInput | Prisma.transactionUpsertWithWhereUniqueWithoutFrom_accountInput[]
-  createMany?: Prisma.transactionCreateManyFrom_accountInputEnvelope
+export type transactionUpdateManyWithoutAccountNestedInput = {
+  create?: Prisma.XOR<Prisma.transactionCreateWithoutAccountInput, Prisma.transactionUncheckedCreateWithoutAccountInput> | Prisma.transactionCreateWithoutAccountInput[] | Prisma.transactionUncheckedCreateWithoutAccountInput[]
+  connectOrCreate?: Prisma.transactionCreateOrConnectWithoutAccountInput | Prisma.transactionCreateOrConnectWithoutAccountInput[]
+  upsert?: Prisma.transactionUpsertWithWhereUniqueWithoutAccountInput | Prisma.transactionUpsertWithWhereUniqueWithoutAccountInput[]
+  createMany?: Prisma.transactionCreateManyAccountInputEnvelope
   set?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
   disconnect?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
   delete?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
   connect?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
-  update?: Prisma.transactionUpdateWithWhereUniqueWithoutFrom_accountInput | Prisma.transactionUpdateWithWhereUniqueWithoutFrom_accountInput[]
-  updateMany?: Prisma.transactionUpdateManyWithWhereWithoutFrom_accountInput | Prisma.transactionUpdateManyWithWhereWithoutFrom_accountInput[]
+  update?: Prisma.transactionUpdateWithWhereUniqueWithoutAccountInput | Prisma.transactionUpdateWithWhereUniqueWithoutAccountInput[]
+  updateMany?: Prisma.transactionUpdateManyWithWhereWithoutAccountInput | Prisma.transactionUpdateManyWithWhereWithoutAccountInput[]
   deleteMany?: Prisma.transactionScalarWhereInput | Prisma.transactionScalarWhereInput[]
 }
 
-export type transactionUncheckedUpdateManyWithoutFrom_accountNestedInput = {
-  create?: Prisma.XOR<Prisma.transactionCreateWithoutFrom_accountInput, Prisma.transactionUncheckedCreateWithoutFrom_accountInput> | Prisma.transactionCreateWithoutFrom_accountInput[] | Prisma.transactionUncheckedCreateWithoutFrom_accountInput[]
-  connectOrCreate?: Prisma.transactionCreateOrConnectWithoutFrom_accountInput | Prisma.transactionCreateOrConnectWithoutFrom_accountInput[]
-  upsert?: Prisma.transactionUpsertWithWhereUniqueWithoutFrom_accountInput | Prisma.transactionUpsertWithWhereUniqueWithoutFrom_accountInput[]
-  createMany?: Prisma.transactionCreateManyFrom_accountInputEnvelope
+export type transactionUncheckedUpdateManyWithoutAccountNestedInput = {
+  create?: Prisma.XOR<Prisma.transactionCreateWithoutAccountInput, Prisma.transactionUncheckedCreateWithoutAccountInput> | Prisma.transactionCreateWithoutAccountInput[] | Prisma.transactionUncheckedCreateWithoutAccountInput[]
+  connectOrCreate?: Prisma.transactionCreateOrConnectWithoutAccountInput | Prisma.transactionCreateOrConnectWithoutAccountInput[]
+  upsert?: Prisma.transactionUpsertWithWhereUniqueWithoutAccountInput | Prisma.transactionUpsertWithWhereUniqueWithoutAccountInput[]
+  createMany?: Prisma.transactionCreateManyAccountInputEnvelope
   set?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
   disconnect?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
   delete?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
   connect?: Prisma.transactionWhereUniqueInput | Prisma.transactionWhereUniqueInput[]
-  update?: Prisma.transactionUpdateWithWhereUniqueWithoutFrom_accountInput | Prisma.transactionUpdateWithWhereUniqueWithoutFrom_accountInput[]
-  updateMany?: Prisma.transactionUpdateManyWithWhereWithoutFrom_accountInput | Prisma.transactionUpdateManyWithWhereWithoutFrom_accountInput[]
+  update?: Prisma.transactionUpdateWithWhereUniqueWithoutAccountInput | Prisma.transactionUpdateWithWhereUniqueWithoutAccountInput[]
+  updateMany?: Prisma.transactionUpdateManyWithWhereWithoutAccountInput | Prisma.transactionUpdateManyWithWhereWithoutAccountInput[]
   deleteMany?: Prisma.transactionScalarWhereInput | Prisma.transactionScalarWhereInput[]
 }
 
@@ -650,14 +650,14 @@ export type transactionCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   category?: Prisma.categoryCreateNestedOneWithoutTransactionsInput
-  from_account?: Prisma.accountCreateNestedOneWithoutOutgoing_transactionsInput
+  account: Prisma.accountCreateNestedOneWithoutTransactionsInput
 }
 
 export type transactionUncheckedCreateWithoutUserInput = {
   id?: string
   type: number
   categoryId?: string | null
-  accountId?: string | null
+  accountId: string
   amount: number
   currency: string
   name: string
@@ -700,7 +700,7 @@ export type transactionScalarWhereInput = {
   userId?: Prisma.StringFilter<"transaction"> | string
   type?: Prisma.IntFilter<"transaction"> | number
   categoryId?: Prisma.StringNullableFilter<"transaction"> | string | null
-  accountId?: Prisma.StringNullableFilter<"transaction"> | string | null
+  accountId?: Prisma.StringFilter<"transaction"> | string
   amount?: Prisma.IntFilter<"transaction"> | number
   currency?: Prisma.StringFilter<"transaction"> | string
   name?: Prisma.StringFilter<"transaction"> | string
@@ -709,7 +709,7 @@ export type transactionScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"transaction"> | Date | string
 }
 
-export type transactionCreateWithoutFrom_accountInput = {
+export type transactionCreateWithoutAccountInput = {
   id?: string
   type: number
   amount: number
@@ -722,7 +722,7 @@ export type transactionCreateWithoutFrom_accountInput = {
   category?: Prisma.categoryCreateNestedOneWithoutTransactionsInput
 }
 
-export type transactionUncheckedCreateWithoutFrom_accountInput = {
+export type transactionUncheckedCreateWithoutAccountInput = {
   id?: string
   userId: string
   type: number
@@ -735,30 +735,30 @@ export type transactionUncheckedCreateWithoutFrom_accountInput = {
   updatedAt?: Date | string
 }
 
-export type transactionCreateOrConnectWithoutFrom_accountInput = {
+export type transactionCreateOrConnectWithoutAccountInput = {
   where: Prisma.transactionWhereUniqueInput
-  create: Prisma.XOR<Prisma.transactionCreateWithoutFrom_accountInput, Prisma.transactionUncheckedCreateWithoutFrom_accountInput>
+  create: Prisma.XOR<Prisma.transactionCreateWithoutAccountInput, Prisma.transactionUncheckedCreateWithoutAccountInput>
 }
 
-export type transactionCreateManyFrom_accountInputEnvelope = {
-  data: Prisma.transactionCreateManyFrom_accountInput | Prisma.transactionCreateManyFrom_accountInput[]
+export type transactionCreateManyAccountInputEnvelope = {
+  data: Prisma.transactionCreateManyAccountInput | Prisma.transactionCreateManyAccountInput[]
   skipDuplicates?: boolean
 }
 
-export type transactionUpsertWithWhereUniqueWithoutFrom_accountInput = {
+export type transactionUpsertWithWhereUniqueWithoutAccountInput = {
   where: Prisma.transactionWhereUniqueInput
-  update: Prisma.XOR<Prisma.transactionUpdateWithoutFrom_accountInput, Prisma.transactionUncheckedUpdateWithoutFrom_accountInput>
-  create: Prisma.XOR<Prisma.transactionCreateWithoutFrom_accountInput, Prisma.transactionUncheckedCreateWithoutFrom_accountInput>
+  update: Prisma.XOR<Prisma.transactionUpdateWithoutAccountInput, Prisma.transactionUncheckedUpdateWithoutAccountInput>
+  create: Prisma.XOR<Prisma.transactionCreateWithoutAccountInput, Prisma.transactionUncheckedCreateWithoutAccountInput>
 }
 
-export type transactionUpdateWithWhereUniqueWithoutFrom_accountInput = {
+export type transactionUpdateWithWhereUniqueWithoutAccountInput = {
   where: Prisma.transactionWhereUniqueInput
-  data: Prisma.XOR<Prisma.transactionUpdateWithoutFrom_accountInput, Prisma.transactionUncheckedUpdateWithoutFrom_accountInput>
+  data: Prisma.XOR<Prisma.transactionUpdateWithoutAccountInput, Prisma.transactionUncheckedUpdateWithoutAccountInput>
 }
 
-export type transactionUpdateManyWithWhereWithoutFrom_accountInput = {
+export type transactionUpdateManyWithWhereWithoutAccountInput = {
   where: Prisma.transactionScalarWhereInput
-  data: Prisma.XOR<Prisma.transactionUpdateManyMutationInput, Prisma.transactionUncheckedUpdateManyWithoutFrom_accountInput>
+  data: Prisma.XOR<Prisma.transactionUpdateManyMutationInput, Prisma.transactionUncheckedUpdateManyWithoutAccountInput>
 }
 
 export type transactionCreateWithoutCategoryInput = {
@@ -771,14 +771,14 @@ export type transactionCreateWithoutCategoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.userCreateNestedOneWithoutTransactionsInput
-  from_account?: Prisma.accountCreateNestedOneWithoutOutgoing_transactionsInput
+  account: Prisma.accountCreateNestedOneWithoutTransactionsInput
 }
 
 export type transactionUncheckedCreateWithoutCategoryInput = {
   id?: string
   userId: string
   type: number
-  accountId?: string | null
+  accountId: string
   amount: number
   currency: string
   name: string
@@ -817,7 +817,7 @@ export type transactionCreateManyUserInput = {
   id?: string
   type: number
   categoryId?: string | null
-  accountId?: string | null
+  accountId: string
   amount: number
   currency: string
   name: string
@@ -836,14 +836,14 @@ export type transactionUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.categoryUpdateOneWithoutTransactionsNestedInput
-  from_account?: Prisma.accountUpdateOneWithoutOutgoing_transactionsNestedInput
+  account?: Prisma.accountUpdateOneRequiredWithoutTransactionsNestedInput
 }
 
 export type transactionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -856,7 +856,7 @@ export type transactionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -865,7 +865,7 @@ export type transactionUncheckedUpdateManyWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type transactionCreateManyFrom_accountInput = {
+export type transactionCreateManyAccountInput = {
   id?: string
   userId: string
   type: number
@@ -878,7 +878,7 @@ export type transactionCreateManyFrom_accountInput = {
   updatedAt?: Date | string
 }
 
-export type transactionUpdateWithoutFrom_accountInput = {
+export type transactionUpdateWithoutAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
   amount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -891,7 +891,7 @@ export type transactionUpdateWithoutFrom_accountInput = {
   category?: Prisma.categoryUpdateOneWithoutTransactionsNestedInput
 }
 
-export type transactionUncheckedUpdateWithoutFrom_accountInput = {
+export type transactionUncheckedUpdateWithoutAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
@@ -904,7 +904,7 @@ export type transactionUncheckedUpdateWithoutFrom_accountInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type transactionUncheckedUpdateManyWithoutFrom_accountInput = {
+export type transactionUncheckedUpdateManyWithoutAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
@@ -921,7 +921,7 @@ export type transactionCreateManyCategoryInput = {
   id?: string
   userId: string
   type: number
-  accountId?: string | null
+  accountId: string
   amount: number
   currency: string
   name: string
@@ -940,14 +940,14 @@ export type transactionUpdateWithoutCategoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.userUpdateOneRequiredWithoutTransactionsNestedInput
-  from_account?: Prisma.accountUpdateOneWithoutOutgoing_transactionsNestedInput
+  account?: Prisma.accountUpdateOneRequiredWithoutTransactionsNestedInput
 }
 
 export type transactionUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
-  accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -960,7 +960,7 @@ export type transactionUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.IntFieldUpdateOperationsInput | number
-  accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -985,7 +985,7 @@ export type transactionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updatedAt?: boolean
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   category?: boolean | Prisma.transaction$categoryArgs<ExtArgs>
-  from_account?: boolean | Prisma.transaction$from_accountArgs<ExtArgs>
+  account?: boolean | Prisma.accountDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
 
 
@@ -1008,7 +1008,7 @@ export type transactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type transactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   category?: boolean | Prisma.transaction$categoryArgs<ExtArgs>
-  from_account?: boolean | Prisma.transaction$from_accountArgs<ExtArgs>
+  account?: boolean | Prisma.accountDefaultArgs<ExtArgs>
 }
 
 export type $transactionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1016,14 +1016,14 @@ export type $transactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     user: Prisma.$userPayload<ExtArgs>
     category: Prisma.$categoryPayload<ExtArgs> | null
-    from_account: Prisma.$accountPayload<ExtArgs> | null
+    account: Prisma.$accountPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
     type: number
     categoryId: string | null
-    accountId: string | null
+    accountId: string
     amount: number
     currency: string
     name: string
@@ -1372,7 +1372,7 @@ export interface Prisma__transactionClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.userDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.userDefaultArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   category<T extends Prisma.transaction$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.transaction$categoryArgs<ExtArgs>>): Prisma.Prisma__categoryClient<runtime.Types.Result.GetResult<Prisma.$categoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  from_account<T extends Prisma.transaction$from_accountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.transaction$from_accountArgs<ExtArgs>>): Prisma.Prisma__accountClient<runtime.Types.Result.GetResult<Prisma.$accountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  account<T extends Prisma.accountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.accountDefaultArgs<ExtArgs>>): Prisma.Prisma__accountClient<runtime.Types.Result.GetResult<Prisma.$accountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1777,25 +1777,6 @@ export type transaction$categoryArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.categoryInclude<ExtArgs> | null
   where?: Prisma.categoryWhereInput
-}
-
-/**
- * transaction.from_account
- */
-export type transaction$from_accountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the account
-   */
-  select?: Prisma.accountSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the account
-   */
-  omit?: Prisma.accountOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.accountInclude<ExtArgs> | null
-  where?: Prisma.accountWhereInput
 }
 
 /**
