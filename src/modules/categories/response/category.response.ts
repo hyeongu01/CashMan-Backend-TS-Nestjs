@@ -9,6 +9,9 @@ export class CategoryResponse {
   groupType: number;
 
   @ApiProperty()
+  transactionType: number;
+
+  @ApiProperty()
   name: string;
 
   @ApiProperty()
@@ -21,6 +24,7 @@ export class CategoryResponse {
     return {
       id: category.id,
       groupType: category.groupType,
+      transactionType: category.transactionType,
       name: category.name,
       iconKey: category.iconKey,
       iconColor: category.iconColor,
