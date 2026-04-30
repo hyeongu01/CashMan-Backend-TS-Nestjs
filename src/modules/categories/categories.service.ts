@@ -69,13 +69,11 @@ export class CategoriesService {
   }
 
   async delete(user: user, id: string) {
-    console.log(id, user);
     const category = await this.prismaService.category.findUnique({
       where: { id },
     });
     if (!category || category.userId !== user.id)
       throw ApiErrorResponse.notFound('id 에 해당하는 카테고리가 없습니다.');
-    console.log(category);
 
     await this.prismaService.category.delete({
       where: { id },

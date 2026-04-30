@@ -12,11 +12,15 @@ import {
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+} from '@nestjs/swagger';
 import { AuthGuard } from '@common/guards/auth.guard';
 import { type user } from '@generated/prisma/client';
 import { CurrentUser } from '@common/decorators/user.decorator';
-import { ApiOperation, ApiResponse } from '@nestjs//swagger';
 import { ApiWrappedResponse } from '@common/decorators/api-wrapped-response.decorator';
 import { CategoryResponse } from './response/category.response';
 
@@ -64,8 +68,22 @@ export class CategoriesController {
   @Delete()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  @ApiOperation({ summary: '카테고리 삭제' })
+  @ApiOperation({
+    summary: '카테고리 삭제',
+    description: `
+  **요청 Body**
+  
+  id: 삭제할 카테고리 ID
+  `,
+  })
   @ApiWrappedResponse()
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: { id: { type: 'string' } },
+      required: ['id'],
+    },
+  })
   async delete(@CurrentUser() user: user, @Body('id') id: string) {
     return this.categoriesService.delete(user, id);
   }
