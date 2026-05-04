@@ -1,21 +1,40 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsDateString,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class CreateTransactionsDto {
   @ApiProperty()
+  @IsInt()
+  @Min(0)
+  @Max(5)
   type: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
   categoryId: string;
 
   @ApiProperty()
-  fromAccountId: string;
+  @IsString()
+  accountId: string;
 
   @ApiProperty()
-  toAccountId: string;
-
-  @ApiProperty()
+  @IsInt()
   amount: number;
 
   @ApiProperty()
+  @IsDateString()
   transactionDate: string;
+
+  @ApiProperty()
+  @IsString()
+  name: string;
 }

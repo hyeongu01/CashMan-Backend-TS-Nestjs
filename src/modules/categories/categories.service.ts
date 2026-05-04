@@ -3,7 +3,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { PrismaService } from '@infra/prisma/prisma.service';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { type user, type category } from '@generated/prisma/client';
-import { type CategoryResponse } from './response/category.response';
+import { CategoryResponse } from './response/category.response';
 import {
   ApiSuccessResponse,
   ApiErrorResponse,
@@ -29,6 +29,7 @@ export class CategoriesService {
       data: {
         id: ulid(),
         ...createCategoryDto,
+
         userId: user.id,
       },
     });
@@ -45,7 +46,7 @@ export class CategoriesService {
     return ApiSuccessResponse.of(
       categories.map(
         (category: category): CategoryResponse =>
-          this.categoryWrapper(category),
+          CategoryResponse.wrapper(category),
       ),
     );
   }
@@ -68,25 +69,15 @@ export class CategoriesService {
   }
 
   async delete(user: user, id: string) {
-    console.log(id, user);
     const category = await this.prismaService.category.findUnique({
       where: { id },
     });
     if (!category || category.userId !== user.id)
       throw ApiErrorResponse.notFound('id 에 해당하는 카테고리가 없습니다.');
-    console.log(category);
 
     await this.prismaService.category.delete({
       where: { id },
     });
     return ApiSuccessResponse.of({});
-  }
-
-  private categoryWrapper(category: category): CategoryResponse {
-    return {
-      id: category.id,
-      groupType: category.groupType,
-      name: category.name,
-    };
   }
 }

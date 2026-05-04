@@ -50,15 +50,23 @@ export class PaginatedResponse<T> {
 
   static of<T>(
     items: T[],
-    page: number,
-    limit: number,
-    totalCount: number,
-    sortBy: string,
-    sortOrder: SortOrder,
+    options: {
+      page: number;
+      limit: number;
+      totalCount: number;
+      sortBy: string;
+      sortOrder: SortOrder;
+    },
   ): PaginatedResponse<T> {
     return new PaginatedResponse(
       items,
-      new PaginationMeta(page, limit, totalCount, sortBy, sortOrder),
+      new PaginationMeta(
+        options.page,
+        options.limit,
+        options.totalCount,
+        options.sortBy,
+        options.sortOrder,
+      ),
     );
   }
 }

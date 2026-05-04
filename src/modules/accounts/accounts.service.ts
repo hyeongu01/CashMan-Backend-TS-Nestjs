@@ -25,14 +25,10 @@ export class AccountsService {
     ]);
 
     return ApiSuccessResponse.of(
-      PaginatedResponse.of(
-        items,
-        paginationDto.page,
-        paginationDto.limit,
-        count,
-        paginationDto.sortBy,
-        paginationDto.sortOrder,
-      ),
+      PaginatedResponse.of(items, {
+        ...paginationDto,
+        totalCount: count,
+      }),
     );
   }
 }
